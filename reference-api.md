@@ -113,11 +113,17 @@ const txId = await transferPromise;
 console.log(`Transfer from Bob to Alice is confirmed. Transaction ID: ${txId}`)
 ```
 
-
-
 ### lqdManagerPostTransfer
 
-### IncomingTransferEmitter (Interface)
+Simply post a transfer without waiting for its confirmation (Sub step of [senTransfer](lqdmanager-sendtransfer)).
+
+| Parameter       | Type   |                          Description |
+| :-------------- | :----- | -----------------------------------: |
+| transfer | OffChainTransfer | Parameter object of an off-chain transfer. |
+
+| Return          |                          Description |
+| :-------------- | -----------------------------------: |
+| Promise<number> | Promise that resolves with the transaction ID. |
 
 ### OffChainTransfer (Type)
 
