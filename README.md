@@ -16,7 +16,7 @@ npm install nocust-client
 
 
 
-## Exemple
+## Example
 
 The following code setup the library and make a transfer to to Alice
 
@@ -48,7 +48,7 @@ function async foo() {
   // Send 0.01 Ether off-chain to Alice  
   lqdManager.sendTransfer({
       to: alice,
-      amount: web3.utils.toWei(0.01,'ether'),
+      amount: web3.utils.toWei(0.01,'ether'), // Amount in wei
       from: bob,
    });  
   
