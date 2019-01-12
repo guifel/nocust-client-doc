@@ -175,7 +175,7 @@ __TransferWalletDataInterface:__
 
 ### lqdManager.syncWallet
 
-Synchronize the wallet of the given public key for the given token. The result will be cached making later calls of this wallet faster. 
+ Force synchronize the wallet of the given public key for the given token. The result will be cached making later calls of this wallet faster.  This function can be useful to pre-cache required internal data (for example on starup of your app) to make later function calls faster. 
 
 | Parameter       | Type   |                          Description |
 | :-------------- | :----- | -----------------------------------: |
