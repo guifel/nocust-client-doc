@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The `nocust-client-library` allows you to interact with [NOCUST](https://liquidity.network/NOCUST_Liquidity_Network_Paper.pdf) non-custodian off-chain payment hubs. It is a layer 2 solution to scale blockchain such as Ethereum and it is working today ! In this document we will describe the client library allowing developers to build wallets with full off-chain capabilities. The library allows you to deposit and Withdraw Ether or ERC-20 token into the payment hub, make payments and Initiate disputes. The library insure internally the security of the off-chain wallet by monitoring the smart-contract of the payment hub and the state of the payment hub. Further the library allow users to make off-chain token swaps. 
+The `nocust-client-library` allows you to interact with [NOCUST](https://liquidity.network/NOCUST_Liquidity_Network_Paper.pdf) non-custodian off-chain payment hubs. It is a layer 2 solution to scale blockchain such as Ethereum and it is working today ! In this document we will describe the client library allowing developers to build wallets with full off-chain capabilities. The library allows you to deposit and Withdraw Ether or ERC-20 token into the payment hub, make payments and Initiate disputes. The library insure internally the security of the off-chain wallet by monitoring the smart-contract of the payment hub and the state of the payment hub. Further the library allow users to make off-chain token swaps.
 
 ## Installation
 
@@ -24,7 +24,7 @@ The following code setup the library and make an Ether transfer to to Alice
 
 ```typescript
 import web3 from 'Web3' // Web3 1.0.x
-import { LQDManager } from 'nocust-client' 
+import { LQDManager } from 'nocust-client'
 
 const bob = '0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0';
 const alice = '0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b';
@@ -43,22 +43,22 @@ const lqdManager = new LQDManager({
 });
 
 function async sendToALice() {
-    
+
   // Register an address to be used with the LQD manager
   await lqdManager.register(bob)
-  
+
   // Send 0.01 Ether off-chain to Alice  
   const txId = await lqdManager.sendTransfer({
       to: alice,
       amount: web3.utils.toWei(0.01,'ether'), // Amount in wei as BigNumber
       from: bob,
    });
-   
+
   console.log("Transfer to Alice sent ! Transaction ID: ", txId)
-  
+
 }
 
-send()
+sendToALice()
 
 ```
 
@@ -70,7 +70,7 @@ NOCSUT hubs currently require recipients of transfers to be online and to sign a
 
 ```typescript
 import web3 from 'Web3' // Web3 1.0.x
-import { LQDManager } from 'nocust-client' 
+import { LQDManager } from 'nocust-client'
 
 const alice = '0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b';
 
@@ -88,19 +88,19 @@ const lqdManager = new LQDManager({
 });
 
 function async register() {
-    
+
   // Register an address to be used with the LQD manager
   const incomingTransferEventEmitter = await lqdManager.register(alice)
- 
+
   // Log on incoming transfers
-  incomingTransferEventEmitter.on('IncomingTransfer', 
+  incomingTransferEventEmitter.on('IncomingTransfer',
     (transfer: TransferDataInterface) => {
       console.log(`Alice is receiving a transfer of  ${transfer.amount} wei from ${transfer.wallet.address}`),
     });
   )
-  
+
   console.log("Alice is ready to receive transfers !")
-  
+
 }
 
 register()
@@ -112,7 +112,7 @@ Note that soon we will release an upgrade of the protocol to allow passive accep
 
 ### ERC-20 token transfers
 
-NOCUST hubs support off-chain transfers of ERC-20 tokens. However, the operator chose what tokens can be used.  To see what tokens your hub currently supports call the function `getSupportedTokens`:
+NOCUST hubs support off-chain transfers of ERC-20 tokens. However, the operator chooses which tokens could be used.  To see which tokens are supported by a hub call `getSupportedTokens`:
 
 ```typescript
 const supportedTokenArray : string[] = await lqdManager.getSupportedTokens()
@@ -120,7 +120,7 @@ const NocustContract : string = supportedTokenArray[0]
 const tokenXYZcontract : string = supportedTokenArray[1]
 ```
 
-`supportedTokenArray` will contain an array of ERC-20 smart-contract addresses available for use. 
+`supportedTokenArray` will contain an array of ERC-20 smart-contract addresses available for use.
 
 The address at index 0 is the address of the NOCUST smart-contract. This simply means that the hub support Ether transfers.
 
@@ -135,7 +135,7 @@ await lqdManager.register(bob, tokenXYZcontract)
 
 
 
-The register function always register by default at least Ether. Additionally it registers for the tokens passed in second parameter. A single token address can be passed or an array of token addresses.  Note that the recipient will also have to `register` the token. 
+The register function always register by default at least Ether. Additionally it registers for the tokens passed in second parameter. A single token address can be passed or an array of token addresses.  Note that the recipient will also have to `register` the token.
 
 
 
@@ -150,9 +150,9 @@ To make a token transfer simply specify the address of the token in the `tokenAd
    });
 ```
 
- 
 
-### Deposits 
+
+### Deposits
 
 
 
@@ -180,11 +180,11 @@ console.log("Bob's off-chain balance is: ", balance.toString())
 
 
 
-All these functions can be used with a parameter `tokenAddress` to manipulate similarly ERC-20 tokens. 
+All these functions can be used with a parameter `tokenAddress` to manipulate similarly ERC-20 tokens.
 
 
 
-### Withdrawals 
+### Withdrawals
 
 
 
@@ -192,7 +192,7 @@ If the user wishes to send its off-chain funds back on-chain (Also call an exit)
 
 
 
-The amount of off-chain funds available for withdrawals may differ from the current off-chain balance. Recently acquired off-chain funds can't be withdraw directly, they will be made fully available over time.  Recently acquired funds will need between 36h and 72h (one full round) to be available.  To check the current the current balance available for withdraw the function `getWithdrawalLimit` :
+The amount of off-chain funds available for withdrawals may differ from the current off-chain balance. Recently acquired off-chain funds cannot be withdrawn directly, they will be made fully available over time.  Recently acquired funds will need between 36h and 72h (one full round) to be available.  To check the current the current balance available for withdraw the function `getWithdrawalLimit` :
 
 
 
@@ -202,7 +202,7 @@ const withdrawalLimit : BigNumber = lqdManager.getWithdrawalLimit(bob)
 
 
 
-Any amount inferior or equal to this amount can be withdraw. 
+Any amount inferior or equal to this amount can be withdraw.
 
 
 
@@ -217,7 +217,7 @@ const transactionHash : string = await lqdManager.withdrawalRequest(
 );
 ```
 
-This will make a contract call to initiate a withdrawal. 
+This will make a contract call to initiate a withdrawal.
 
 
 
@@ -229,7 +229,7 @@ const blocksToConfirmation : number = await lqdManager.getBlocksToWithdrawalConf
 
 
 
-This function returns the number of block to wait before we can send the confirmation transaction. If it returns `0`  the withdrawal is ready for confirmation .  Note that the function will return `-1` if there is no withdrawal pending. 
+This function returns the number of block to wait before we can send the confirmation transaction. If it returns `0`  the withdrawal is ready for confirmation .  Note that the function will return `-1` if there is no withdrawal pending.
 
 
 
@@ -245,4 +245,4 @@ const transactionHash : string = await lqdManager.withdrawalRequest(
 
 
 
-This contract call will effectively transfer the funds from the NOCUST smart contract to bob address. 
+This contract call will effectively transfer the funds from the NOCUST smart contract to bob address.
