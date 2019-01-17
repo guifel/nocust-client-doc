@@ -1,7 +1,7 @@
 # Reference API
 
 ### LQDManager  (Constructor) 
-The `LQDManager` object provides all the methods. This constructor requires a Web3 instance version 1.0.x with a private key loaded. The private will be used later to generate signatures to register, send transfer, receive transfer, etc..
+The `LQDManager` object provides all the methods. This constructor requires a Web3 instance version 1.0.x with a private key loaded. The private key will be used later to generate signatures to register, send transfers, receive transfers, etc..
 
 | Parameter   | Type                                    |                                      Description |
 | :----- | :-------------------------------------- | -----------------------------------------------: |
