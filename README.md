@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The `nocust-client-library` allows you to interact with [NOCUST](https://liquidity.network/NOCUST_Liquidity_Network_Paper.pdf) non-custodian off-chain payment hubs. It is a layer 2 solution to scale blockchain such as Ethereum and it works today! In this document we will describe the client library that allows developers to build wallets with full off-chain capabilities. The library enables you to deposit and Withdraw Ether or ERC-20 tokens in or out of the payment hub, make payments and Initiate disputes. The library insures internally the security of the off-chain wallet by monitoring the smart-contract of the payment hub and the state of the payment hub. Further the library allow users to make off-chain token swaps.
+The `nocust-client-library` allows you to interact with [NOCUST](https://liquidity.network/NOCUST_Liquidity_Network_Paper.pdf) non-custodian off-chain payment hubs. It is a layer 2 solution to scale blockchain such as Ethereum and it works today! In this document, we will describe the client library that allows developers to build wallets with full off-chain capabilities. The library enables you to deposit and Withdraw Ether or ERC-20 tokens in or out of the payment hub, make payments and Initiate disputes. The library ensures internally the security of the off-chain wallet by monitoring the smart-contract of the payment hub and the state of the payment hub. Furthermore, the library allows users to make off-chain token swaps.
 
 ## Installation
 
@@ -20,7 +20,7 @@ npm install nocust-client
 
 ### Off-chain transfers
 
-The following code enables setup of the library and to make an Ether transfer to Alice
+The following code enables setup of the library and to make an Ether transfer to Alice.
 
 ```typescript
 import web3 from 'Web3' // Web3 1.0.x
@@ -106,7 +106,7 @@ function async register() {
 register()
 ```
 
-Note that soon we will release an upgrade of the protocol to allow passive accept. This means that no specific actions will be required from the recipient in order to receive a transfer.  
+Note that we will soon release an upgrade of the protocol to allow passive accept. This means that no specific actions will be required from the recipient in order to receive a transfer.  
 
 
 
@@ -135,7 +135,7 @@ await lqdManager.register(bob, tokenXYZcontract)
 
 
 
-The register function always registers by default at least Ether. Additionally it registers the tokens passed in second parameter. A single token address can be passed or an array of token addresses.  Note that the recipient will also have to `register` the token.
+The register function always registers by default at least Ether. Additionally it registers the tokens passed in a second parameter. A single token address can be passed or an array of token addresses.  Note that the recipient will also have to `register` the token.
 
 
 
@@ -192,7 +192,7 @@ If the user wishes to send their off-chain funds back on-chain (Also call an exi
 
 
 
-The amount of off-chain funds available for withdrawals may differ from the current off-chain balance. Recently acquired off-chain funds cannot be withdrawn instantly, they will be made fully available over time.  Recently acquired funds will need between 36h and 72h (one full round) to be available.  To check the current balance available for withdrawal call the function `getWithdrawalLimit` :
+The amount of off-chain funds available for withdrawal may differ from the current off-chain balance. Recently acquired off-chain funds cannot be withdrawn instantly, they will be made fully available over time.  Recently acquired funds will need between 36h and 72h (one full round) to be available. To check the current balance available for withdrawal call the function `getWithdrawalLimit` :
 
 
 
@@ -221,7 +221,7 @@ This will make a contract call to initiate a withdrawal.
 
 
 
-The funds don't get transfered back to bob's address directly.  A wait of between 36h and 72h is needed (again one full round) to check how much time is left before the withdrawal can be confirmed the function `getBlocksToWithdrawalConfirmation` can be used:
+The funds will not be transfered back to bob's address instantly.  A wait of between 36h and 72h is needed (again one full round), to check how much time is left before the withdrawal can be confirmed the function `getBlocksToWithdrawalConfirmation` can be used:
 
 ```typescript
 const blocksToConfirmation : number = await lqdManager.getBlocksToWithdrawalConfirmation(bob)
