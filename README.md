@@ -236,7 +236,7 @@ This function returns the number of block to wait before we can send the confirm
 Finally, to confirm the withdrawal we need to do:
 
 ```typescript
-const transactionHash : string = await lqdManager.withdrawalRequest(
+const transactionHash : string = await lqdManager.withdrawalConfirmation(
   bob,							 // Account from which to make the withdrawal
   web3.utils.toWei(10,'gwei'),   // Gas price, 10 Gwei
   300000						 // Gas Limit
