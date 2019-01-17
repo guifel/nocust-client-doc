@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The `nocust-client-library` allows you to interact with [NOCUST](https://liquidity.network/NOCUST_Liquidity_Network_Paper.pdf) non-custodian off-chain payment hubs. It is a layer 2 solution to scale blockchain such as Ethereum and it is working today ! In this document we will describe the client library allowing developers to build wallets with full off-chain capabilities. The library allows you to deposit and Withdraw Ether or ERC-20 token into the payment hub, make payments and Initiate disputes. The library insure internally the security of the off-chain wallet by monitoring the smart-contract of the payment hub and the state of the payment hub. Further the library allow users to make off-chain token swaps.
+The `nocust-client-library` allows you to interact with [NOCUST](https://liquidity.network/NOCUST_Liquidity_Network_Paper.pdf) non-custodian off-chain payment hubs. It is a layer 2 solution to scale blockchain such as Ethereum and it works today! In this document we will describe the client library that allows developers to build wallets with full off-chain capabilities. The library enables you to deposit and Withdraw Ether or ERC-20 tokens in or out of the payment hub, make payments and Initiate disputes. The library insures internally the security of the off-chain wallet by monitoring the smart-contract of the payment hub and the state of the payment hub. Further the library allow users to make off-chain token swaps.
 
 ## Installation
 
@@ -20,7 +20,7 @@ npm install nocust-client
 
 ### Off-chain transfers
 
-The following code setup the library and make an Ether transfer to to Alice
+The following code enables setup of the library and to make an Ether transfer to Alice
 
 ```typescript
 import web3 from 'Web3' // Web3 1.0.x
@@ -64,7 +64,7 @@ sendToALice()
 
 
 
-NOCSUT hubs currently require recipients of transfers to be online and to sign a message to receive an off-chain transfer.  The library once setup, after calling the `register` function, will automatically accept transfers. Alice needs to setup a lqdManager with her private key as follow:
+NOCUST hubs currently require recipients of transfers to be online and to sign a message to receive an off-chain transfer.  The library once setup and after calling the `register` function, will automatically accept transfers. Alice needs to setup a lqdManager with her private key as follow:
 
 
 
@@ -112,7 +112,7 @@ Note that soon we will release an upgrade of the protocol to allow passive accep
 
 ### ERC-20 token transfers
 
-NOCUST hubs support off-chain transfers of ERC-20 tokens. However, the operator chooses which tokens could be used.  To see which tokens are supported by a hub call `getSupportedTokens`:
+NOCUST hubs support off-chain transfers of ERC-20 tokens. However, the operator chooses which tokens can be used.  To see which tokens are supported by a hub call `getSupportedTokens`:
 
 ```typescript
 const supportedTokenArray : string[] = await lqdManager.getSupportedTokens()
@@ -122,7 +122,7 @@ const tokenXYZcontract : string = supportedTokenArray[1]
 
 `supportedTokenArray` will contain an array of ERC-20 smart-contract addresses available for use.
 
-The address at index 0 is the address of the NOCUST smart-contract. This simply means that the hub support Ether transfers.
+The address at index 0 is the address of the NOCUST smart-contract. This simply means that the hub supports Ether transfers.
 
 
 
@@ -135,11 +135,11 @@ await lqdManager.register(bob, tokenXYZcontract)
 
 
 
-The register function always register by default at least Ether. Additionally it registers for the tokens passed in second parameter. A single token address can be passed or an array of token addresses.  Note that the recipient will also have to `register` the token.
+The register function always registers by default at least Ether. Additionally it registers the tokens passed in second parameter. A single token address can be passed or an array of token addresses.  Note that the recipient will also have to `register` the token.
 
 
 
-To make a token transfer simply specify the address of the token in the `tokenAddress` field.
+To make a token transfer, simply specify the address of the token in the `tokenAddress` field.
 
 ```typescript
   const txId : number = await lqdManager.sendTransfer({
@@ -156,7 +156,7 @@ To make a token transfer simply specify the address of the token in the `tokenAd
 
 
 
-In order to make transfers you first needs some off-chain funds. Off-chain funds are simply funds deposited into the NOCUST smart-contract. The library provides a function to deposit funds into the hub contract.
+In order to make transfers you first need off-chain funds. Off-chain funds are simply funds deposited into the NOCUST smart-contract. The library provides a function to deposit funds into the hub contract.
 
 
 
@@ -171,7 +171,7 @@ const transactionHash : string = await lqdManager.deposit(
 
 
 
-This function make an on-chain contract call to the NOCUST contract and sending the specified amount to the contract. If the transaction succeed, after `60` confirmation blocks the funds will be available in the off-chain account. To verify the off-chain balance call the `getOffChainBalance` function:
+This function makes an on-chain contract call to the NOCUST contract and sends the specified amount to the contract. If the transaction is successful, after `60` confirmation blocks the funds will be available in the off-chain account. To verify the off-chain balance call the `getOffChainBalance` function:
 
 ```typescript
 const balance : BigNumber = await lqdManager.getOffChainBalance(bob);
@@ -180,7 +180,7 @@ console.log("Bob's off-chain balance is: ", balance.toString())
 
 
 
-All these functions can be used with a parameter `tokenAddress` to manipulate similarly ERC-20 tokens.
+All of these functions can be used with a parameter `tokenAddress` to manipulate similarly ERC-20 tokens.
 
 
 
@@ -188,11 +188,11 @@ All these functions can be used with a parameter `tokenAddress` to manipulate si
 
 
 
-If the user wishes to send its off-chain funds back on-chain (Also call an exit) he needs to do a withdrawal. Withdrawals take longer time and are a 2 step process requiring 2 contract calls.  
+If the user wishes to send their off-chain funds back on-chain (Also call an exit) he needs to execute a withdrawal. Withdrawals take a longer time and are a 2 step process requiring 2 contract calls.  
 
 
 
-The amount of off-chain funds available for withdrawals may differ from the current off-chain balance. Recently acquired off-chain funds cannot be withdrawn directly, they will be made fully available over time.  Recently acquired funds will need between 36h and 72h (one full round) to be available.  To check the current the current balance available for withdraw the function `getWithdrawalLimit` :
+The amount of off-chain funds available for withdrawals may differ from the current off-chain balance. Recently acquired off-chain funds cannot be withdrawn instantly, they will be made fully available over time.  Recently acquired funds will need between 36h and 72h (one full round) to be available.  To check the current balance available for withdrawal call the function `getWithdrawalLimit` :
 
 
 
@@ -202,11 +202,11 @@ const withdrawalLimit : BigNumber = lqdManager.getWithdrawalLimit(bob)
 
 
 
-Any amount inferior or equal to this amount can be withdraw.
+Any amount inferior or equal to this amount can be withdrawn.
 
 
 
-To initiate a withdrawal the function ` withdrawalRequest` need to be used :
+To initiate a withdrawal the function ` withdrawalRequest` will need to be used :
 
 ```typescript
 const transactionHash : string = await lqdManager.withdrawalRequest(
@@ -221,7 +221,7 @@ This will make a contract call to initiate a withdrawal.
 
 
 
-The funds don't get transfered back to bob address directly.  It is needed to wait a period of time between 36h and 72h (again one full round).  To check how much time is left before we can confirm the withdrawal the function `getBlocksToWithdrawalConfirmation` can be used:
+The funds don't get transfered back to bob's address directly.  A wait of between 36h and 72h is needed (again one full round) to check how much time is left before the withdrawal can be confirmed the function `getBlocksToWithdrawalConfirmation` can be used:
 
 ```typescript
 const blocksToConfirmation : number = await lqdManager.getBlocksToWithdrawalConfirmation(bob)
@@ -229,11 +229,11 @@ const blocksToConfirmation : number = await lqdManager.getBlocksToWithdrawalConf
 
 
 
-This function returns the number of block to wait before we can send the confirmation transaction. If it returns `0`  the withdrawal is ready for confirmation .  Note that the function will return `-1` if there is no withdrawal pending.
+This function returns the number of blocks needed before we can send the confirmation transaction. If it returns `0`  the withdrawal is ready for confirmation. Note that the function will return `-1` if there is no withdrawal pending.
 
 
 
-Finally, to confirm the withdrawal we need to do:
+Finally, to confirm the withdrawal we need to:
 
 ```typescript
 const transactionHash : string = await lqdManager.withdrawalConfirmation(
@@ -245,4 +245,4 @@ const transactionHash : string = await lqdManager.withdrawalConfirmation(
 
 
 
-This contract call will effectively transfer the funds from the NOCUST smart contract to bob address.
+This contract call will effectively transfer the funds from the NOCUST smart contract to bob's address.
