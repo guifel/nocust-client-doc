@@ -6,7 +6,7 @@ The `nocust-client-library` allows you to interact with [NOCUST](https://liquidi
 
 <img src="img/setup.png" alt="setup" width="500"/>
 The Nocust client library will be located on Bob's end. This schema illustrate the diffrent roles of each component in a NOCUST payment system. 
-Find an introduction to NOCUST payment system [here](https://blog.liquidity.network/2018/11/21/nocust-101/)
+Find an introduction to NOCUST payment systems [here](https://blog.liquidity.network/2018/11/21/nocust-101/).
 
 
 ## Installation
