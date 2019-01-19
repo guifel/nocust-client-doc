@@ -5,6 +5,8 @@
 The `nocust-client-library` allows you to interact with [NOCUST](https://liquidity.network/NOCUST_Liquidity_Network_Paper.pdf) non-custodian off-chain payment hubs. It is a layer 2 solution to scale blockchain such as Ethereum and it works today! In this document, we will describe the client library that allows developers to build wallets with full off-chain capabilities. The library enables you to deposit and Withdraw Ether or ERC-20 tokens in or out of the payment hub, make payments and Initiate disputes. The library ensures internally the security of the off-chain wallet by monitoring the smart-contract of the payment hub and the state of the payment hub. Furthermore, the library allows users to make off-chain token swaps.
 
 <img src="img/setup.png" alt="setup" width="500"/>
+
+
 The Nocust client library will be located on Bob's end. This schema illustrate the diffrent roles of each component in a NOCUST payment system. 
 Find an introduction to NOCUST payment systems [here](https://blog.liquidity.network/2018/11/21/nocust-101/).
 
