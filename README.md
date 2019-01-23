@@ -17,12 +17,19 @@ Find an introduction to NOCUST payment systems [here](https://blog.liquidity.net
 
 
 
-Installation:
+To install the library, simply run:
 
 ```
 npm install nocust-client
 ```
 
+The libray has to be used with Web3 (1.x) to interact with the Ethereum Network. Additionaly, as we are manipulating exclusively ethers amounts in wei (10^-18 Ether) that are potentilly very large, [bigger than the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin). We use the `bignumber.js` library for Ether and token amounts.
+
+Required dependencies:
+
+```
+npm install web3 bignumber.js
+```
 
 
 ## Examples
@@ -33,6 +40,7 @@ The following code enables the setup of the library and for Bob to make an Ether
 
 ```typescript
 import web3 from 'Web3' // Web3 1.0.x
+import BigNumber from "bignumber.js"
 import { LQDManager } from 'nocust-client'
 
 const bob = '0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0';
@@ -59,7 +67,7 @@ function async sendToALice() {
   // Send 0.01 Ether off-chain to Alice  
   const txId = await lqdManager.sendTransfer({
       to: alice,
-      amount: web3.utils.toWei(0.01,'ether'), // Amount in wei as BigNumber
+      amount: (new BigNumber(0.01)).shiftedBy(-18), // 0.01 Ether in wei as BigNumber
       from: bob,
    });
 
