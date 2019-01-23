@@ -31,6 +31,9 @@ Required dependencies:
 npm install web3 bignumber.js
 ```
 
+For typescript users: 
+
+If in your `tsconfig.json` your `target` is `es3` or `es5` please add the option `"allowSyntheticDefaultImports": true` 
 
 ## Examples
 
