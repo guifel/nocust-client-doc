@@ -200,7 +200,7 @@ console.log("Bob's off-chain balance is: ", balance.toString())
 
 
 
-All of these functions can be used with a parameter `tokenAddress` to similarly manipulate ERC-20 tokens.
+All of these functions can be used with a parameter `tokenAddress` to similarly manipulate ERC-20 tokens. Don't forget to give transfer allowance to the nocust contract for the ERC-20 you wish to use. (Explanations [here](https://medium.com/ethex-market/erc20-approve-allow-explained-88d6de921ce9))
 
 
 
