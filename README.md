@@ -23,7 +23,7 @@ To install the library, simply run:
 npm install nocust-client
 ```
 
-The libray has to be used with Web3 (1.x) to interact with the Ethereum Network. Additionaly, as we are manipulating exclusively ethers amounts in wei (10^-18 Ether) that are potentilly very large, [bigger than the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin). We use the `bignumber.js` library for Ether and token amounts.
+The libray has to be used with Web3 (1.x) to interact with the Ethereum Network. Additionaly, as we are manipulating exclusively Ethers amounts in wei (10^-18 Ether) that are potentially very large, [bigger than the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin). We use the `bignumber.js` library for Ether and token amounts.
 
 Required dependencies:
 
