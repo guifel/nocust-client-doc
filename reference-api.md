@@ -92,7 +92,7 @@ Send an off-chain transfer. Return a PromiEvent (Promise + Event emitter) that r
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-| PromiEvent<number> | Promise and event at the same time, it can be subscribe on event 'Posted' and the promise return the transaction ID. |
+| PromiEvent\<number> | Promise and event at the same time, it can be subscribe on event 'Posted' and the promise return the transaction ID. |
 
 __Exemple:__
 ```typescript
@@ -123,7 +123,7 @@ Simply post a transfer without waiting for its confirmation (Sub step of [senTra
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-| Promise<number> | Promise that resolves with the transaction ID. |
+| Promise\<number> | Promise that resolves with the transaction ID. |
 
 ### OffChainTransfer (Type)
 
@@ -184,7 +184,7 @@ __TransferWalletDataInterface:__
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<void> |  Promise that resolves when the operation finishes |
+|Promise\<void> |  Promise that resolves when the operation finishes |
 ### lqdManager.deposit
 
 Make an on-chain transaction to deposit funds into the NOCUST smart-contract. This funds can be later used for making off-chain transfers.
@@ -199,7 +199,7 @@ Make an on-chain transaction to deposit funds into the NOCUST smart-contract. Th
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<string> |  Promise that resolves with the on-chain transaction hash when the operation finishes |
+|Promise\<string> |  Promise that resolves with the on-chain transaction hash when the operation finishes |
 
 ### lqdManager.withdrawalrequest
 
@@ -215,7 +215,7 @@ Make an on-chain transaction to initiate a withdrawal to remove the funds from t
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<string> |  Promise that resolves with the on-chain transaction hash when the operation finishes |
+|Promise\<string> |  Promise that resolves with the on-chain transaction hash when the operation finishes |
 
 ### lqdManager.withdrawalConfirmation
 
@@ -230,7 +230,7 @@ Make an on-chain transaction to confirm a withdrawal previously [initialized](#l
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<string> |  Promise that resolves with the on-chain transaction hash when the operation finishes |
+|Promise\<string> |  Promise that resolves with the on-chain transaction hash when the operation finishes |
 
 ### lqdManager.getOffChainBalance
 
@@ -243,7 +243,7 @@ Fetch off-chain balance.
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<BigNumber> | Promise that resolves with the off-chain balance. |
+|Promise\<BigNumber> | Promise that resolves with the off-chain balance. |
 
 ### lqdManager.getSupportedTokens
 
@@ -251,7 +251,7 @@ Fetch the smart contract addresses of the supported token by the payment hub.
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<string[]> | Promise that resolves with an array of the ERC-20 smart contracts addresses supported by the payment hub. Note that Ether will appear with the address of the NOCUST smart contract. |
+|Promise\<string[]> | Promise that resolves with an array of the ERC-20 smart contracts addresses supported by the payment hub. Note that Ether will appear with the address of the NOCUST smart contract. |
 
 ### lqdManager.getTransaction
 
@@ -263,7 +263,7 @@ Get the transaction details for a given transaction ID.
 
 | Return                                                       |                                               Description |
 | :----------------------------------------------------------- | --------------------------------------------------------: |
-| Promise<[TransferDataInterface](#transferdatainterface-type)> | Promise that resolves with the required transfer details. |
+| Promise\<[TransferDataInterface](#transferdatainterface-type)> | Promise that resolves with the required transfer details. |
 
 ### lqdManager.getWithdrawalLimit
 
@@ -276,7 +276,7 @@ Withdrawals are limited to a certain amount (Because funds need to committed int
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<BigNumber> |  Promise that resolves with the current withdrawal limit |
+|Promise\<BigNumber> |  Promise that resolves with the current withdrawal limit |
 
 ### lqdManager.getOnChainBalance
 
@@ -289,7 +289,7 @@ Get current on-chain balance.
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<BigNumber> | Promise that resolves with the current on-chain balance. |
+|Promise\<BigNumber> | Promise that resolves with the current on-chain balance. |
 
 ### lqdManager.getWithdrawalFee
 
@@ -302,7 +302,7 @@ Gets the current withdrawal fee to the payment hub operator.
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<BigNumber> | Promise that resolves with the current withdrawal fee. |
+|Promise\<BigNumber> | Promise that resolves with the current withdrawal fee. |
 
 ### lqdManager.getRoundNumber
 
@@ -315,7 +315,7 @@ Gets the current round of the payment hub (Number of checkpoints submitted since
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<number> | Promise that resolves with the current round |
+|Promise\<number> | Promise that resolves with the current round |
 
 ### lqdManager.getRoundBlockNumber
 
@@ -328,7 +328,7 @@ Gets the number of blocks since the beginning of the current round (Sub block).
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<number> | Promise that resolves with the current sub block. |
+|Promise\<number> | Promise that resolves with the current sub block. |
 
 ### lqdManager.getBlockPerRound
 
@@ -341,7 +341,7 @@ Gets the current number of block for one round (Currently 8640 blocks)
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<number> | Promise that resolves with the number of block per round. |
+|Promise\<number> | Promise that resolves with the number of block per round. |
 
 ### lqdManager.getWalletState
 
@@ -354,7 +354,7 @@ Get the `WalletState` object for lower level API use.
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<WalletState> | Promise that resolves with required wallet State. |
+|Promise\<WalletState> | Promise that resolves with required wallet State. |
 
 
 ### lqdManager.isRecovery
@@ -368,7 +368,7 @@ Check weather the payment is on recovery mode (Meaning that the payment lost a c
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<boolean> |  Promise that resolves the recovery boolean. |
+|Promise\<boolean> |  Promise that resolves the recovery boolean. |
 
 ### lqdManager.isAddressRegisteredWithHub
 
@@ -381,7 +381,7 @@ Check if the address is registered with the payment hub for the specified token.
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<boolean> |  Promise that resolves with the registration boolean. |
+|Promise\<boolean> |  Promise that resolves with the registration boolean. |
 
 ### lqdManager.isConnectedToHub
 
@@ -409,7 +409,7 @@ Make an on-chain transaction to initiate a state update challenge.
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<string> |  Promise that resolves with the on-chain transaction hash when the operation finishes |
+|Promise\<string> |  Promise that resolves with the on-chain transaction hash when the operation finishes |
 
 ### lqdManager.challenge.issueDeliveryChallenge
 
@@ -425,7 +425,7 @@ Make an on-chain transaction to initiate a delivery challenge.
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<string> |  Promise that resolves with the on-chain transaction hash when the operation finishes |
+|Promise\<string> |  Promise that resolves with the on-chain transaction hash when the operation finishes |
 
 ### lqdManager.challenge.recoverFunds
 
@@ -440,5 +440,5 @@ Make an on-chain transaction to recover funds whenever the hub falls into recove
 
 | Return          |                          Description |
 | :-------------- | -----------------------------------: |
-|Promise<string> |  Promise that resolves with the on-chain transaction hash when the operation finishes |
+|Promise\<string> |  Promise that resolves with the on-chain transaction hash when the operation finishes |
 
