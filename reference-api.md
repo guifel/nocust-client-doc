@@ -308,11 +308,11 @@ Gets the current round of the payment hub \(Number of checkpoints submitted sinc
 
 | Parameter | Type | Description |
 | :--- | :--- | ---: |
-| address | string | Any Ethereum address registered with the hub |
+| address | string | Any Ethereum address registered with the hub. |
 
 | Return | Description |
 | :--- | ---: |
-| Promise`<number>` | Promise that resolves with the current round |
+| Promise`<number>` | Promise that resolves with the current round. |
 
 ## lqdManager.getRoundBlockNumber
 
@@ -320,11 +320,25 @@ Gets the number of blocks since the beginning of the current round \(Sub block\)
 
 | Parameter | Type | Description |
 | :--- | :--- | ---: |
-| address | string | Any Ethereum address registered with the hub |
+| address | string | Any Ethereum address registered with the hub. |
 
 | Return | Description |
 | :--- | ---: |
 | Promise`<number>` | Promise that resolves with the current sub block. |
+
+## lqdManager.getBlocksToWithdrawalConfirmation
+
+Get the number of blocks until it is possible to send the withdrawal confirmation on-chain transaction. It will return -1 if no withdrawals are pending or 0 if the withdrawal is ready to be confirmed. 
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| address | string | Address that started the withdrawal |
+| txHash \(optional\) | string | Transaction hash of the on-chain transaction of the of the withdrawal request. Will use the oldest pending withdrawal if not specified. |
+| tokenAddress \(optional\) | string | Targeted ERC-20 token. Use Ether if not specified |
+
+| Return | Description |
+| :--- | :--- |
+| Promise`<number>` | Number of blocks until the withdrawal confirmation is possible |
 
 ## lqdManager.getBlockPerRound
 
@@ -332,7 +346,7 @@ Gets the current number of block for one round \(Currently 8640 blocks\)
 
 | Parameter | Type | Description |
 | :--- | :--- | ---: |
-| address | string | Any Ethereum address registered with the hub |
+| address | string | Any Ethereum address registered with the hub. |
 
 | Return | Description |
 | :--- | ---: |
