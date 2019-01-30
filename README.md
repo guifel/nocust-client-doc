@@ -30,6 +30,33 @@ For typescript users:
 
 If in your `tsconfig.json` your `target` is `es3` or `es5` please add the option `"allowSyntheticDefaultImports": true`
 
+## Deployed Payment Hubs
+
+This is a list of the currently deployed payment hubs. See in the example below how to use these values to get started with the nocust-client
+
+| Ethereum Mainnet hub |  |
+| :--- | :--- |
+| NOCUST smart-contract address \(`contractAddress`\) | To be deploy |
+| Hub API URL \(`hubApiUrl`\) | [https://public.liquidity.network/](https://public.liquidity.network/) |
+| LQD ERC-20 contract address | 0xD29F0b5b3F50b07Fe9a9511F7d86F4f4bAc3f8c4 |
+
+| Rinkeby hub | Value |
+| :--- | :--- |
+| NOCUST smart-contract address \(`contractAddress`\) | 0x6B9f10931E88349A572F2f0883E49528902B4b5D |
+| Hub API URL \(`hubApiUrl`\) | [http://rinkeby.liquidity.network/](http://rinkeby.liquidity.network/) |
+| Test ERC-20 contract address | 0xA9F86DD014C001Acd72d5b25831f94FaCfb48717 |
+
+
+
+This is a test hub on a private blockchain with a shorter block interval \(4 sec instead of 15 sec\) and a shorter round time \(4 min instead of 36 hours\). Initiate Web3 with a HTTP provider with the RPC URL provided in the table below. 
+
+| Private test Hub |  |
+| :--- | :--- |
+| NOCUST smart-contract address \(`contractAddress`\) | 0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7 |
+| Hub API URL \(`hubApiUrl`\) | [https://limbo.liquidity.network/](https://limbo.liquidity.network/admission/) |
+| Test ERC-20 contract address | 0xe982E462b094850F12AF94d21D470e21bE9D0E9C |
+| Ethereum node RPC URL | [https://limbo.liquidity.network/ethrpc](https://limbo.liquidity.network/ethrpc) |
+
 ## Examples
 
 ### Off-chain transfers
@@ -47,14 +74,14 @@ const alice = '0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b';
 const bobPrivateKey = '0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1'
 
 // Setup web3 with Infura
-const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/'));
+const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/'));
 web3.eth.accounts.wallet.add(bobPrivateKey) // Add private to web3 for signing
 
 // Setup the LQDManager
 const lqdManager = new LQDManager({
   rpcApi: web3,
-  hubApiUrl: 'https://public.liquidity.network/', // TODO UPDATE
-  contractAddress: '0xad471Bde2303f2f43325b2108D26f1eAbA1e32b', // TODO UPDATE
+  hubApiUrl: 'https://rinkeby.liquidity.network/', // TODO UPDATE
+  contractAddress: '0x6B9f10931E88349A572F2f0883E49528902B4b5D', // TODO UPDATE
 });
 
 function async sendToALice() {
