@@ -35,7 +35,7 @@ lqdManager = new LQDManager(config);
 
 ## LQDManagerConfig \(Type\) 
 
-Configuration object for the `LQDManager` constructor.
+Configuration object for the `LQDManager` constructor. You can use the values specified [here](https://liquidity-network.gitbook.io/project/#deployed-payment-hubs).
 
 | Name | Type | Description |
 | :--- | :--- | ---: |
