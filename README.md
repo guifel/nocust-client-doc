@@ -43,7 +43,7 @@ This is a list of the currently deployed payment hubs. See in the example below 
 | Rinkeby hub | Value |
 | :--- | :--- |
 | NOCUST smart-contract address \(`contractAddress`\) | 0x6B9f10931E88349A572F2f0883E49528902B4b5D |
-| Hub API URL \(`hubApiUrl`\) | [http://rinkeby.liquidity.network/](http://rinkeby.liquidity.network/) |
+| Hub API URL \(`hubApiUrl`\) | [https://rinkeby.liquidity.network/](http://rinkeby.liquidity.network/) |
 | Test ERC-20 contract address | 0xA9F86DD014C001Acd72d5b25831f94FaCfb48717 |
 
 
