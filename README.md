@@ -4,7 +4,7 @@
 
 ## Introduction
 
-The `nocust-client-library` allows you to interact with the [NOCUST](https://liquidity.network/NOCUST_Liquidity_Network_Paper.pdf) commit-chain. It is a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet! In this document, we describe the client library that allows developers to build wallets with full commit-chain capabilities. The library enables you to deposit (convert to commit-chain coins) and withdraw (convert to Ethereum coins) Ether or ERC-20 tokens, in or out of the commit-chain, make payments and initiate disputes. The library internally ensures the security of the commit-chain wallet by monitoring the smart-contract of the commit-chain operator (Henry) and the state of the commit-chain. Furthermore, the library allows users to make commit-chain token swaps!
+The `nocust-client-library` allows you to interact with the [NOCUST](https://liquidity.network/NOCUST_Liquidity_Network_Paper.pdf) commit-chain. It is a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet! In this document, we describe the client library that allows developers to build wallets with full commit-chain capabilities. The library enables you to deposit (convert to commit-chain coins) and withdraw (convert to Ethereum coins) Ether or ERC-20 tokens, in or out of the commit-chain, make payments and initiate disputes. The library internally ensures the security of the commit-chain wallet by monitoring the smart-contract of the commit-chain operator (Henry) and the state of the commit-chain. Furthermore, the library allows users to make commit-chain token swaps! 
 
 ![NOCUST setup](https://raw.githubusercontent.com/guifel/nocust-client-doc/master/img/setup.png)
 
