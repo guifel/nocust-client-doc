@@ -18,17 +18,42 @@ To install the library, simply run:
 npm install nocust-client
 ```
 
-The libray has to be used with Web3 \(1.x\) to interact with the Ethereum Network. Additionaly, as we are manipulating exclusively Ethers amounts in wei \(10^-18 Ether\). And that these amounts are potentially very large, [bigger than the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin). We use the `bignumber.js` library for Ether and token amounts.
+The library has to be used with Web3 \(version 1.0.0-beta.36 only for now\) to interact with the Ethereum Network. Additionally, as we are manipulating exclusively Ethers amounts in wei \(10^-18 Ether\). And that these amounts are potentially very large, [bigger than the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin). We use the `bignumber.js` library for Ether and token amounts.
 
 Required dependencies:
 
 ```text
-npm install web3 bignumber.js
+npm install web3@1.0.0-beta.36 bignumber.js
 ```
 
 For typescript users:
 
-If in your `tsconfig.json` your `target` is `es3` or `es5` please add the option `"allowSyntheticDefaultImports": true`
+The following configuration is recommended in your `tsconfig.json` file.
+
+```javascript
+{
+  "compilerOptions": {
+      "baseUrl": ".",
+      "paths": { "*": ["types/*"] },
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "dist",
+    "declaration": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "node"
+   ],
+  }
+}
+```
 
 ## Deployed Payment Hubs
 
@@ -72,27 +97,33 @@ const bob = '0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0';
 const alice = '0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b';
 
 const bobPrivateKey = '0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1'
+const alicePrivateKey ='0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c'
 
 // Setup web3 with Infura
 const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/'));
-web3.eth.accounts.wallet.add(bobPrivateKey) // Add private to web3 for signing
+// Add private key to web3 for signing 
+web3.eth.accounts.wallet.add(bobPrivateKey)
+web3.eth.accounts.wallet.add(alicePrivateKey)
 
 // Setup the LQDManager
 const lqdManager = new LQDManager({
   rpcApi: web3,
-  hubApiUrl: 'https://rinkeby.liquidity.network/', // TODO UPDATE
-  contractAddress: '0x6B9f10931E88349A572F2f0883E49528902B4b5D', // TODO UPDATE
-});
+  hubApiUrl: 'https://rinkeby.liquidity.network/',
+  contractAddress: '0x6B9f10931E88349A572F2f0883E49528902B4b5D',
+  });
 
-function async sendToALice() {
+const sendToALice = async () => {
 
   // Register an address to be used with the LQD manager
   await lqdManager.register(bob)
+  await lqdManager.register(alice)
 
   // Send 0.01 Ether off-chain to Alice  
-  const txId = await lqdManager.sendTransfer({
+  const txId = await lqdManager.postTransfer({
       to: alice,
-      amount: (new BigNumber(0.01)).shiftedBy(-18), // 0.01 Ether in wei as BigNumber
+      // 0.01 Ether in wei as BigNumber. 
+      // Note that you need the funds first, see deposits below
+      amount: (new BigNumber(0.01)).shiftedBy(-18),
       from: bob,
    });
 
@@ -101,6 +132,7 @@ function async sendToALice() {
 }
 
 sendToALice()
+
 ```
 
 NOCUST hubs currently require recipients of transfers to be online, and to sign a message in order to receive an off-chain transfer. Once the library has been setup and after calling the `register` function, transfers will automatically be accepted. Alice needs to setup a lqdManager with her private key as follows:
@@ -120,8 +152,8 @@ web3.eth.accounts.wallet.add(alicePrivateKey) // Add private to web3 for signing
 // Setup the LQDManager
 const lqdManager = new LQDManager({
   rpcApi: web3,
-  hubApiUrl: 'https://public.liquidity.network/', // TODO UPDATE
-  contractAddress: '0xad471Bde2303f2f43325b2108D26f1eAbA1e32b', // TODO UPDATE
+  hubApiUrl: 'https://rinkeby.liquidity.network/',
+  contractAddress: '0x6B9f10931E88349A572F2f0883E49528902B4b5D',
 });
 
 function async register() {
