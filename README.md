@@ -1,14 +1,21 @@
 # Getting Started
 
-[**Full API reference**](https://liquidity-network.gitbook.io/project/)
+The `nocust-client-library` allows you to interact with the [NOCUST](https://liquidity.network/NOCUST_Liquidity_Network_Paper.pdf) commit-chain. NOCUST is a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet! We refer the interested developer to an introduction of NOCUST systems [here](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](), and for the formal geeks we provide a proper [paper](https://eprint.iacr.org/2018/642.pdf).
 
-## Introduction
+In this document, we describe the client library that allows developers to build wallets or dApps with *full commit-chain capabilities*. The library enables you to:
 
-The `nocust-client-library` allows you to interact with the [NOCUST](https://liquidity.network/NOCUST_Liquidity_Network_Paper.pdf) commit-chain. It is a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet! In this document, we describe the client library that allows developers to build wallets with full commit-chain capabilities. The library enables you to deposit (convert to commit-chain coins) and withdraw (convert to Ethereum coins) Ether or ERC-20 tokens, in or out of the commit-chain, make payments and initiate disputes. The library internally ensures the security of the commit-chain wallet by monitoring the smart-contract of the commit-chain operator (Henry) and the state of the commit-chain. Furthermore, the library allows users to make commit-chain token swaps! 
+* Deposit (convert Ethereum to commit-chain coins)
+* Withdraw (convert commit-chain coins to Ethereum)
+* Make payments from address A to B
+* Make atomic swaps from address A to B
+
+The library currently supports Ether or ERC-20 tokens. Transactions on the commit-chain **cost zero gas** and are **instant** enabling plenty new use-cases 😱. The client internally ensures the security of the commit-chain wallet by monitoring the smart-contract of the commit-chain operator (Henry) and the state of the commit-chain.
 
 ![NOCUST setup](https://raw.githubusercontent.com/guifel/nocust-client-doc/master/img/setup.png)
 
-The Nocust client library will be located on Bob's end. This schema illustrates the diffrent roles of each component in a NOCUST payment system. Find an introduction to NOCUST payment systems [here](https://blog.liquidity.network/2018/11/21/nocust-101/).
+The figure above illustrates the diffrent roles of each component in a NOCUST payment system. Bob is the one running the NOCUST client library to interact with Henry, the NOCUST operator and the smart contract.
+
+
 
 ## Installation
 
@@ -18,17 +25,15 @@ To install the library, simply run:
 npm install nocust-client
 ```
 
-The library has to be used with Web3 \(version 1.0.0-beta.36 only for now\) to interact with the Ethereum Network. Additionally, as we are manipulating exclusively Ethers amounts in wei \(10^-18 Ether\). And that these amounts are potentially very large, [bigger than the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin). We use the `bignumber.js` library for Ether and token amounts.
+The library has to be used with Web3 \(version 1.0.0-beta.36 only for now\) to interact with the Ethereum Network. Additionally, as we are manipulating exclusively Ether amounts in Wei \(10^-18 Ether\), and knowing that these amounts are potentially very large, [bigger than the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin), we use the `bignumber.js` library for Ether and token amounts.
 
-Required dependencies:
+Required dependencies that are to be installed:
 
 ```text
 npm install web3@1.0.0-beta.36 bignumber.js
 ```
 
-For typescript users:
-
-The following configuration is recommended in your `tsconfig.json` file.
+For typescript users we recomment the following configuration in your `tsconfig.json` file.
 
 ```javascript
 {
@@ -55,36 +60,38 @@ The following configuration is recommended in your `tsconfig.json` file.
 }
 ```
 
-## Deployed Payment Hubs
+## Currently Deployed Commit-Chains
 
-This is a list of the currently deployed payment hubs. See in the example below how to use these values to get started with the nocust-client
+The following table shows a list of the currently deployed commit-chains. See in the example below how to use these values to get started with the nocust-client.
 
-| Ethereum Mainnet hub |  |
+| Ethereum Mainnet commit-chain |  |
 | :--- | :--- |
-| NOCUST smart-contract address \(`contractAddress`\) | To be deploy |
-| Hub API URL \(`hubApiUrl`\) | [https://public.liquidity.network/](https://public.liquidity.network/) |
+| NOCUST smart-contract address \(`contractAddress`\) | To be deployed |
+| Commit-Chain API URL \(`hubApiUrl`\) | [https://public.liquidity.network/](https://public.liquidity.network/) |
 | LQD ERC-20 contract address | 0xD29F0b5b3F50b07Fe9a9511F7d86F4f4bAc3f8c4 |
 
-| Rinkeby hub | Value |
+| Rinkeby commit-chain | Value |
 | :--- | :--- |
 | NOCUST smart-contract address \(`contractAddress`\) | 0x6B9f10931E88349A572F2f0883E49528902B4b5D |
-| Hub API URL \(`hubApiUrl`\) | [https://rinkeby.liquidity.network/](http://rinkeby.liquidity.network/) |
+| Commit-Chain API URL \(`hubApiUrl`\) | [https://rinkeby.liquidity.network/](http://rinkeby.liquidity.network/) |
 | Test ERC-20 contract address | 0xA9F86DD014C001Acd72d5b25831f94FaCfb48717 |
 
+The following is a test commit-chain on a private blockchain with a shorter block interval \(4 seconds instead of 15 seconds\) and a shorter round time \(4 minutes instead of 36 hours\). This allows developers to test features much faster than waiting for long round times 😁.
 
+Please do initiate Web3 with a HTTP provider given the RPC URL provided in the following table.
 
-This is a test hub on a private blockchain with a shorter block interval \(4 sec instead of 15 sec\) and a shorter round time \(4 min instead of 36 hours\). Initiate Web3 with a HTTP provider with the RPC URL provided in the table below. 
-
-| Private test Hub |  |
+| Private test commit-chain |  |
 | :--- | :--- |
 | NOCUST smart-contract address \(`contractAddress`\) | 0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7 |
-| Hub API URL \(`hubApiUrl`\) | [https://limbo.liquidity.network/](https://limbo.liquidity.network/admission/) |
+| Commit-Chain API URL \(`hubApiUrl`\) | [https://limbo.liquidity.network/](https://limbo.liquidity.network/admission/) |
 | Test ERC-20 contract address | 0xe982E462b094850F12AF94d21D470e21bE9D0E9C |
 | Ethereum node RPC URL | [https://limbo.liquidity.network/ethrpc](https://limbo.liquidity.network/ethrpc) |
 
+
+
 ## Examples
 
-### Off-chain transfers
+### Commit-chain transfers
 
 The following code enables the setup of the library and for Bob to make an Ether transfer to Alice.
 
