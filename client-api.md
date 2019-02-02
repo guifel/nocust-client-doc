@@ -1,4 +1,4 @@
-# Reference API
+# Client API
 
 ## LQDManager  \(Constructor\)
 

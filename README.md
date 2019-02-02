@@ -1,31 +1,39 @@
 # Getting Started
 
-The `nocust-client-library` allows you to interact with the [NOCUST](https://liquidity.network/NOCUST_Liquidity_Network_Paper.pdf) commit-chain 🌊. NOCUST is a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet! We refer the interested developer to an introduction of NOCUST systems [here](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](), and for the formal geeks we provide a proper [paper](https://eprint.iacr.org/2018/642.pdf) 🤓 .
+NOCUST is commit-chain, a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet!
 
-In this document, we describe the client library that allows developers to build wallets or dApps with *full commit-chain capabilities*. The library enables you to:
+A commit-chain is a *chain of commits* ⛓️, that means that NOCUST is committing regularly, every *round*, a commit of the chain to the parent Ethereum chain. The commit-chain is run by an operator, and clients communicate with the operator. Contrary to side-chains, commit-chains don't need an additional consensus mechanism and rely on the security of Ethereum. We refer the interested developer to a basic introduction of NOCUST [here](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](./background.md), and for the formal geeks we provide a [paper](https://eprint.iacr.org/2018/642.pdf) 🤓 .
+
+We start by describing the client 📱 (how to make transactions).
+
+## The Client 📱
+
+The `nocust-client` allows you to interact with the NOCUST 🌊 commit-chain.
+
+In this document, we describe the client that allows developers to build wallets or dApps with *full commit-chain capabilities*. The client enables you to:
 
 * Deposit (convert Ethereum ➡️ commit-chain coins)
 * Withdraw (convert commit-chain coins ➡️ Ethereum)
 * Make payments from address A ➡️ B
 * Make atomic swaps between address A ↔️ B
 
-The library currently supports Ether or ERC-20 tokens. Once Ether or tokens are on a commit-chain, we refer to them as fast, free (and furious?) assets, for example fETH, or fTOKEN. Transactions on the commit-chain **cost zero gas** and are **instant** enabling plenty new use-cases 😱. The client internally ensures the security of the commit-chain wallet by monitoring the smart-contract of the commit-chain operator (Henry) and the state of the commit-chain.
+The client currently supports Ether or ERC-20 tokens. Once Ether or tokens are on a commit-chain, we refer to them as fast, free (and furious?) assets, for example fETH, or fTOKEN. Transactions on the commit-chain **cost zero gas** and are **instant** enabling plenty new use-cases 😱. The client internally ensures the security of the commit-chain wallet by monitoring the smart-contract of the commit-chain operator (Henry) and the state of the commit-chain.
 
-The following figure illustrates the diffrent roles of each component in a NOCUST commit-chain. Bob is the one running the NOCUST client library to interact with Henry, the NOCUST operator and the smart contract.
+The following figure illustrates the diffrent roles of each component in a NOCUST commit-chain. Bob is the one running the NOCUST client to interact with Henry, the NOCUST operator and the smart contract.
 
 
 
-![NOCUST setup](https://raw.githubusercontent.com/guifel/nocust-client-doc/master/img/setup.png)
+![NOCUST setup](./img/setup.png)
 
 ## Installation
 
-To install the library, simply run:
+To install the client, simply run:
 
 ```text
 npm install nocust-client
 ```
 
-The library requires Web3 \(version 1.0.0-beta.36 only for now\) to interact with the Ethereum Network. Additionally, as we are manipulating exclusively Ether amounts in Wei \(10^-18 Ether\), we use the `bignumber.js` library for Ether and token amounts ([to go beyond the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin)).
+The client requires Web3 \(version 1.0.0-beta.36 only for now\) to interact with the Ethereum Network. Additionally, as we are manipulating exclusively Ether amounts in Wei \(10^-18 Ether\), we use the `bignumber.js` library for Ether and token amounts ([to go beyond the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin)).
 
 Required dependencies to be installed:
 
@@ -91,7 +99,7 @@ Please do initiate Web3 with a HTTP provider given the RPC URL provided in the f
 
 ### Commit-Chain Transfer - Full Example
 
-The following code sets up the library and transfers 0 fETH 🤪 from Bob 🙋‍♂️ to Alice 🙋‍♀️ (test using node).
+The following code sets up the client and transfers 0 fETH 🤪 from Bob 🙋‍♂️ to Alice 🙋‍♀️ (test using node).
 
 ```typescript
 import web3 from 'Web3' // Web3 1.0.0-beta.36 only for now
@@ -144,7 +152,7 @@ sendToALice()
 
 ### Deposits (Ethereum ➡️ Commit-Chain)
 
-In order to make transfers, you need to have commit-chain funds. Commit-chain funds are simply funds deposited into the NOCUST smart-contract, and can be done through the library as follows.
+In order to make transfers, you need to have commit-chain funds. Commit-chain funds are simply funds deposited into the NOCUST smart-contract, and can be done through the client as follows.
 
 ```typescript
 const transactionHash : string = await lqdManager.deposit(
