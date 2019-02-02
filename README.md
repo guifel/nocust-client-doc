@@ -1,6 +1,6 @@
 # Getting Started
 
-NOCUST is commit-chain, a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet!
+Liquidity Network is build out of NOCUST commit-chains, a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet!
 
 A commit-chain is a *chain of commits* ⛓️, that means that NOCUST is committing regularly, every *round*, a commit of the chain to the parent Ethereum chain. The commit-chain is run by an operator, and clients communicate with the operator. Contrary to side-chains, commit-chains don't need an additional consensus mechanism and rely on the security of Ethereum. We refer the interested developer to a basic introduction of NOCUST [here](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](./background.md), and for the formal geeks we provide a [paper](https://eprint.iacr.org/2018/642.pdf) 🤓 .
 
