@@ -2,28 +2,26 @@
 
 Liquidity Network's underlying technology are NOCUST commit-chains, a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet!
 
-A commit-chain is a *chain of commits* ⛓️, that means that NOCUST is committing regularly, every *round*, a commit of the chain to the parent Ethereum chain. The commit-chain is run by an operator, and clients communicate with the operator. Contrary to side-chains, commit-chains don't need an additional consensus mechanism and rely on the security of Ethereum. We refer the interested developer to a basic introduction of NOCUST [here](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](./background.md), and for the formal geeks we provide a [paper](https://eprint.iacr.org/2018/642.pdf) 🤓 .
+A commit-chain is a _chain of commits_ ⛓️, that means that NOCUST is committing regularly, every _round_, a commit of the chain to the parent Ethereum chain. The commit-chain is run by an operator, and clients communicate with the operator. Contrary to side-chains, commit-chains don't need an additional consensus mechanism and rely on the security of Ethereum. We refer the interested developer to a basic introduction of NOCUST [here](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](background.md), and for the formal geeks we provide a [paper](https://eprint.iacr.org/2018/642.pdf) 🤓 .
 
-We start by describing the client 📱 (how to make transactions).
+We start by describing the client 📱 \(how to make transactions\).
 
 ## The Client 📱
 
 The `nocust-client` allows you to interact with the NOCUST 🌊 commit-chain.
 
-In this document, we describe the client that allows developers to build wallets or dApps with *full commit-chain capabilities*. The client enables you to:
+In this document, we describe the client that allows developers to build wallets or dApps with _full commit-chain capabilities_. The client enables you to:
 
-* Deposit (convert Ethereum ➡️ commit-chain coins)
-* Withdraw (convert commit-chain coins ➡️ Ethereum)
+* Deposit \(convert Ethereum ➡️ commit-chain coins\)
+* Withdraw \(convert commit-chain coins ➡️ Ethereum\)
 * Make payments from address A ➡️ B
 * Make atomic swaps between address A ↔️ B
 
-The client currently supports Ether or ERC-20 tokens. Once Ether or tokens are on a commit-chain, we refer to them as fast, free (and furious?) assets, for example fETH, or fTOKEN. Transactions on the commit-chain **cost zero gas** and are **instant** enabling plenty new use-cases 😱. The client internally ensures the security of the commit-chain wallet by monitoring the smart-contract of the commit-chain operator (Henry) and the state of the commit-chain.
+The client currently supports Ether or ERC-20 tokens. Once Ether or tokens are on a commit-chain, we refer to them as fast, free \(and furious?\) assets, for example fETH, or fTOKEN. Transactions on the commit-chain **cost zero gas** and are **instant** enabling plenty new use-cases 😱. The client internally ensures the security of the commit-chain wallet by monitoring the smart-contract of the commit-chain operator \(Henry\) and the state of the commit-chain.
 
 The following figure illustrates the diffrent roles of each component in a NOCUST commit-chain. Bob is the one running the NOCUST client to interact with Henry, the NOCUST operator and the smart contract.
 
-
-
-![NOCUST setup](./img/setup.png)
+![NOCUST setup](.gitbook/assets/setup%20%281%29.png)
 
 ## Installation
 
@@ -33,7 +31,7 @@ To install the client, simply run:
 npm install nocust-client
 ```
 
-The client requires Web3 \(version 1.0.0-beta.36 only for now\) to interact with the Ethereum Network. Additionally, as we are manipulating exclusively Ether amounts in Wei \(10^-18 Ether\), we use the `bignumber.js` library for Ether and token amounts ([to go beyond the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin)).
+The client requires Web3 \(version 1.0.0-beta.36 only for now\) to interact with the Ethereum Network. Additionally, as we are manipulating exclusively Ether amounts in Wei \(10^-18 Ether\), we use the `bignumber.js` library for Ether and token amounts \([to go beyond the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin)\).
 
 Required dependencies to be installed:
 
@@ -95,14 +93,12 @@ Please do initiate Web3 with a HTTP provider given the RPC URL provided in the f
 | Test ERC-20 contract address | 0xe982E462b094850F12AF94d21D470e21bE9D0E9C |
 | Ethereum node RPC URL | [https://limbo.liquidity.network/ethrpc](https://limbo.liquidity.network/ethrpc) |
 
-
-
 ### Commit-Chain Transfer - Full Example
 
-The following code sets up the client and transfers 0 fETH 🤪 from Bob 🙋‍♂️ to Alice 🙋‍♀️ (test using node).
+The following code sets up the client and transfers 0 fETH 🤪 from Bob 🙋‍♂️ to Alice 🙋‍♀️ \(test using node\).
 
 ```typescript
-import web3 from 'Web3' // Web3 1.0.0-beta.36 only for now
+import Web3 from 'web3' // Web3 1.0.0-beta.36 only for now
 import BigNumber from "bignumber.js"
 import { LQDManager } from 'nocust-client'
 
@@ -145,12 +141,9 @@ const sendToALice = async () => {
 }
 
 sendToALice()
-
 ```
 
-
-
-### Deposits (Ethereum ➡️ Commit-Chain)
+### Deposits \(Ethereum ➡️ Commit-Chain\)
 
 In order to make transfers, you need to have commit-chain funds. Commit-chain funds are simply funds deposited into the NOCUST smart-contract, and can be done through the client as follows.
 
@@ -172,15 +165,12 @@ console.log("Bob's commit-chain balance is: ", balance.toString())
 
 ⚠️ Don't forget to provide a [transfer allowance](https://medium.com/ethex-market/erc20-approve-allow-explained-88d6de921ce9) to the NOCUST contract for the ERC-20 you wish to use.
 
-
-
-### Commit-Chain Transfers (🙋‍♂️ ➡️ 🙋‍♀️)
+### Commit-Chain Transfers \(🙋‍♂️ ➡️ 🙋‍♀️\)
 
 Commit-Chain transfers are free of gas and instant! There are two modes to send them.
 
-* **Active Delivery:** The NOCUST commit-chain currently requires the recipient of a transfer to be online (to sign a message to receive a commit-chain transfer). Once the library is setup and after calling the `register` function, transfers are automatically accepted.
-
-* **Passive Delivery [soon]:** We will soon be releasing an upgrade to NOCUST to allow a client to receive a transaction while **offline** 👻.
+* **Active Delivery:** The NOCUST commit-chain currently requires the recipient of a transfer to be online \(to sign a message to receive a commit-chain transfer\). Once the library is setup and after calling the `register` function, transfers are automatically accepted.
+* **Passive Delivery \[soon\]:** We will soon be releasing an upgrade to NOCUST to allow a client to receive a transaction while **offline** 👻.
 
 #### Listening for Incoming Transfers
 
@@ -229,7 +219,7 @@ const NocustContract : string = supportedTokenArray[0]
 const tokenXYZcontract : string = supportedTokenArray[1]
 ```
 
-`supportedTokenArray` contains an array of ERC-20 smart-contract addresses. The address at index 0 is the address of the NOCUST smart-contract (reflecting the fETH on the commit-chain).
+`supportedTokenArray` contains an array of ERC-20 smart-contract addresses. The address at index 0 is the address of the NOCUST smart-contract \(reflecting the fETH on the commit-chain\).
 
 With the help of the `register()` function, we can tell the operator which tokens we want to use:
 
@@ -238,7 +228,7 @@ await lqdManager.register(bob, tokenXYZcontract)
 // Bob can receive fETH and the fToken at the address `tokenXYZcontract`
 ```
 
-The register function always registers fETH by default and registers the token(s) in the second parameter. Note, that the recipient also needs to `register()` the token. To make a fToken transfer, simply specify the address of the fToken in the `tokenAddress` field.
+The register function always registers fETH by default and registers the token\(s\) in the second parameter. Note, that the recipient also needs to `register()` the token. To make a fToken transfer, simply specify the address of the fToken in the `tokenAddress` field.
 
 ```typescript
   const txId : number = await lqdManager.sendTransfer({
@@ -249,9 +239,7 @@ The register function always registers fETH by default and registers the token(s
    });
 ```
 
-
-
-### Withdrawals (Commit-Chain ➡️ Ethereum)
+### Withdrawals \(Commit-Chain ➡️ Ethereum\)
 
 A withdrawal allows the user to send commit-chain funds back to Ethereum \(also called an exit\). Withdrawals take time ⌛ and are a 2 step process requiring 2 separate contract calls.
 
@@ -261,7 +249,7 @@ The amount of commit-chain funds available for withdrawal may differ from the cu
 const withdrawalLimit : BigNumber = lqdManager.getWithdrawalLimit(bob)
 ```
 
-To initiate a withdrawal, call `withdrawalRequest()` with an amount <= `withdrawalLimit`:
+To initiate a withdrawal, call `withdrawalRequest()` with an amount &lt;= `withdrawalLimit`:
 
 ```typescript
 const transactionHash : string = await lqdManager.withdrawalRequest(
@@ -278,7 +266,7 @@ This issues a contract call to initiate a withdrawal. After 36h to 72h \(corresp
 const blocksToConfirmation : number = await lqdManager.getBlocksToWithdrawalConfirmation(bob)
 ```
 
- `getBlocksToWithdrawalConfirmation()` returns the number of block confirmations required before to confirm a withdrawal. If the function returns `0`, the withdrawal is ready for confirmation. Note that the function will return `-1` if there is no withdrawal pending.
+`getBlocksToWithdrawalConfirmation()` returns the number of block confirmations required before to confirm a withdrawal. If the function returns `0`, the withdrawal is ready for confirmation. Note that the function will return `-1` if there is no withdrawal pending.
 
 Finally, to confirm the withdrawal, you can call `withdrawalConfirmation()`:
 
@@ -291,3 +279,4 @@ const transactionHash : string = await lqdManager.withdrawalConfirmation(
 ```
 
 This contract call transfers the funds from the NOCUST smart contract to Bob's address.
+

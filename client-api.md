@@ -6,7 +6,7 @@ The `LQDManager` object provides all the methods. This constructor requires a We
 
 | Parameter | Type | Description |
 | :--- | :--- | ---: |
-| config | [LQDManagerConfig](reference-api.md#lqdmanagerconfig-type) | Configuration object for LQD manager constructor. |
+| config | [LQDManagerConfig](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanagerconfig-type) | Configuration object for LQD manager constructor. |
 
 | Return | Description |
 | :--- | ---: |
@@ -33,7 +33,7 @@ const config : LQDManagerConfig = {
 lqdManager = new LQDManager(config);
 ```
 
-## LQDManagerConfig \(Type\) 
+## LQDManagerConfig \(Type\)
 
 Configuration object for the `LQDManager` constructor. You can use the values specified [here](https://liquidity-network.gitbook.io/project/#deployed-payment-hubs).
 
@@ -60,7 +60,7 @@ tokenAddress \(Optional\) \| string or string\[\] \| Addresses of the ERC-20 con
 
 | Return | Description |
 | :--- | ---: |
-| Promise&lt;[IncomingTransferEmitter](reference-api.md#incomingtransferemitter-interface)&gt; | Event emitter to get notified on incoming transfer. |
+| Promise&lt;[IncomingTransferEmitter](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#incomingtransferemitter-interface)&gt; | Event emitter to get notified on incoming transfer. |
 
 **Example:**
 
@@ -129,7 +129,7 @@ Parameters to execute an off-chain transfer
 
 | Name | Type | Description |
 | :--- | :--- | ---: |
-| to | string | Recipient of the transfer, this address needs to have been registered with the payment hub at least once in the past. You can insure that the receipient is registered by using the [isAddressRegisteredWithHub](reference-api.md#lqdmanager-isaddressregisteredwithhub) method |
+| to | string | Recipient of the transfer, this address needs to have been registered with the payment hub at least once in the past. You can insure that the receipient is registered by using the [isAddressRegisteredWithHub](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanager-isaddressregisteredwithhub) method |
 | amount | BigNumber | Amount in wei \(for Ether\) of the transfer |
 | from | string | Sender of the off-chain transfer \(The corresponding private key will need to be loaded in the web3 instance of the lqdManager \) |
 | tokenAddress \(Optional\) | string | Address of the ERC-20 token to transfer, execute an Ether transfer if not specified. |
@@ -202,7 +202,7 @@ Make an on-chain transaction to deposit funds into the NOCUST smart-contract. Th
 
 ## lqdManager.withdrawalrequest
 
-Make an on-chain transaction to initiate a withdrawal to remove the funds from the NOCUST smart contract and to get them at the specified address. The amount specified needs [to be available for withdrawal](reference-api.md#lqdmanager-getwithdrawallimit) . The withdrawal will have to be [confirmed](reference-api.md#lqdmanager-withdrawalconfirmation) after a certain period of time \(Currently between 36 and 72h\). On the top the gas fee, this function will take an [Ether fee](reference-api.md#lqdmanager-getwithdrawalfee) from the on-chain balance for the hub operator.
+Make an on-chain transaction to initiate a withdrawal to remove the funds from the NOCUST smart contract and to get them at the specified address. The amount specified needs [to be available for withdrawal](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanager-getwithdrawallimit) . The withdrawal will have to be [confirmed](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanager-withdrawalconfirmation) after a certain period of time \(Currently between 36 and 72h\). On the top the gas fee, this function will take an [Ether fee](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanager-getwithdrawalfee) from the on-chain balance for the hub operator.
 
 | Parameter | Type | Description |
 | :--- | :--- | ---: |
@@ -218,7 +218,7 @@ Make an on-chain transaction to initiate a withdrawal to remove the funds from t
 
 ## lqdManager.withdrawalConfirmation
 
-Make an on-chain transaction to confirm a withdrawal previously [initialized](reference-api.md#lqdmanager-withdrawalrequest) and effectively transfer the funds.
+Make an on-chain transaction to confirm a withdrawal previously [initialized](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanager-withdrawalrequest) and effectively transfer the funds.
 
 | Parameter | Type | Description |
 | :--- | :--- | ---: |
@@ -262,7 +262,7 @@ Get the transaction details for a given transaction ID.
 
 | Return | Description |
 | :--- | ---: |
-| Promise&lt;[TransferDataInterface](reference-api.md#transferdatainterface-type)&gt; | Promise that resolves with the required transfer details. |
+| Promise&lt;[TransferDataInterface](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#transferdatainterface-type)&gt; | Promise that resolves with the required transfer details. |
 
 ## lqdManager.getWithdrawalLimit
 
@@ -328,7 +328,7 @@ Gets the number of blocks since the beginning of the current round \(Sub block\)
 
 ## lqdManager.getBlocksToWithdrawalConfirmation
 
-Get the number of blocks until it is possible to send the withdrawal confirmation on-chain transaction. It will return -1 if no withdrawals are pending or 0 if the withdrawal is ready to be confirmed. 
+Get the number of blocks until it is possible to send the withdrawal confirmation on-chain transaction. It will return -1 if no withdrawals are pending or 0 if the withdrawal is ready to be confirmed.
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
@@ -367,7 +367,7 @@ Get the `WalletState` object for lower level API use.
 
 ## lqdManager.isRecovery
 
-Check weather the payment is on recovery mode \(Meaning that the payment lost a challenge or missed to submit a checkpoint\). If it returns true the payment hub is no longer in operation, the only operation possible to withdraw your off-chain balance using the [recoverFunds](reference-api.md#lqdmanager-recoverfunds) method.
+Check weather the payment is on recovery mode \(Meaning that the payment lost a challenge or missed to submit a checkpoint\). If it returns true the payment hub is no longer in operation, the only operation possible to withdraw your off-chain balance using the [recoverFunds](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanager-recoverfunds) method.
 
 | Parameter | Type | Description |
 | :--- | :--- | ---: |
