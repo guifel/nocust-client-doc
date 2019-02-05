@@ -2,11 +2,13 @@
 
 Liquidity Network's underlying technology are NOCUST commit-chains, a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet!
 
-A commit-chain is a *chain of commits* ⛓️, that means that NOCUST is committing regularly, every *round*, a commit of the chain to the parent Ethereum chain. The commit-chain is run by an operator, and clients communicate with the operator. Contrary to side-chains, commit-chains don't need an additional consensus mechanism and rely on the security of Ethereum. We refer the interested developer to a basic introduction of NOCUST [here](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](./background.md), and for the formal geeks we provide a [paper](https://eprint.iacr.org/2018/642.pdf) 🤓 .
+A commit-chain is a *chain of commits* ⛓️, that means that NOCUST is committing regularly, every *round*, a commit of the commit-chain to the parent Ethereum chain. The commit-chain is run by a **non-custodial hub**, or operator, and clients communicate with the hub.
 
-We start by describing the client 📱 (how to make transactions).
+Contrary to side-chains, commit-chains don't need an additional consensus mechanism and rely on the security of Ethereum. We refer the interested developer to a basic introduction of NOCUST [here](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](./background.md), and for the formal geeks we provide a [paper](https://eprint.iacr.org/2018/642.pdf) 🤓 .
 
-## The Client 📱
+For developers, we start by describing the JavaScript API for NOCUST 📱 (how to make transactions).
+
+## NOCUST JavaScript API 📱
 
 The `nocust-client` allows you to interact with the NOCUST 🌊 commit-chain.
 
@@ -27,7 +29,7 @@ The following figure illustrates the diffrent roles of each component in a NOCUS
 
 ## Installation
 
-To install the client, simply run:
+To install the NOCUST JavaScript API, simply run:
 
 ```text
 npm install nocust-client
