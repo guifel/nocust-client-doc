@@ -4,7 +4,7 @@ Liquidity Network's underlying technology are NOCUST commit-chains, a layer 2 so
 
 A commit-chain is a *chain of commits* ⛓️, that means that NOCUST is committing regularly, every *round*, a commit of the commit-chain to the parent Ethereum chain. The commit-chain is run by a **non-custodial hub**, or operator, and clients communicate with the hub.
 
-Contrary to side-chains, commit-chains don't need an additional consensus mechanism and rely on the security of Ethereum. We refer the interested developer to a basic introduction of NOCUST [here](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](./background.md), and for the formal geeks we provide a [paper](https://eprint.iacr.org/2018/642.pdf) 🤓 .
+Contrary to side-chains, commit-chains don't need an additional consensus mechanism and rely on the security of the parent chain (here Ethereum). We refer the interested developer to a basic introduction of [basic introduction of NOCUST](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](./background.md), and for the formal geeks [we provide a paper](https://eprint.iacr.org/2018/642.pdf) 🤓 .
 
 For developers, we start by describing the JavaScript API for NOCUST 📱 (how to make transactions).
 
@@ -14,12 +14,12 @@ The `nocust-client` allows you to interact with the NOCUST 🌊 commit-chain.
 
 In this document, we describe the client that allows developers to build wallets or dApps with _full commit-chain capabilities_. The client enables you to:
 
-* Deposit \(convert Ethereum ➡️ commit-chain coins\)
-* Withdraw \(convert commit-chain coins ➡️ Ethereum\)
+* Deposit \(convert Ethereum ➡️ NOCUST coins\)
+* Withdraw \(convert NOCUST coins ➡️ Ethereum\)
 * Make payments from address A ➡️ B
 * Make atomic swaps between address A ↔️ B
 
-The client currently supports Ether or ERC-20 tokens. Once Ether or tokens are on a commit-chain, we refer to them as fast, free \(and furious?\) assets, for example fETH, or fTOKEN. Transactions on the commit-chain **cost zero gas** and are **instant** enabling plenty new use-cases 😱. The client internally ensures the security of the commit-chain wallet by monitoring the smart-contract of the commit-chain operator \(Henry\) and the state of the commit-chain.
+The client currently supports Ether or ERC-20 tokens. Once Ether or tokens are on a NOCUST commit-chain, we refer to them as fast, free \(and furious? 😛\) assets, for example fETH, or fTOKEN. Transactions on the NOCUST commit-chain **cost zero gas** and are **instant** enabling plenty new use-cases 😲. The client internally ensures the security of the NOCUST wallet by monitoring the smart-contract of the NOCUST operator \(Henry\) and the state of the NOCUST commit-chain.
 
 The following figure illustrates the diffrent roles of each component in a NOCUST commit-chain. Bob is the one running the NOCUST client to interact with Henry, the NOCUST operator and the smart contract.
 
@@ -68,34 +68,34 @@ For typescript users we recomment the following configuration in your `tsconfig.
 }
 ```
 
-## Currently Deployed Commit-Chains
+## Currently Deployed NOCUST commit-chains
 
-The following table shows a list of the currently deployed commit-chains.
+The following table shows a list of the currently deployed NOCUST instances.
 
-| Ethereum Mainnet commit-chain |  |
+| Ethereum Mainnet |  |
 | :--- | :--- |
 | NOCUST smart-contract address \(`contractAddress`\) | To be deployed |
-| Commit-Chain API URL \(`hubApiUrl`\) | [https://public.liquidity.network/](https://public.liquidity.network/) |
+| Hub API URL \(`hubApiUrl`\) | [https://public.liquidity.network/](https://public.liquidity.network/) |
 | LQD ERC-20 contract address | 0xD29F0b5b3F50b07Fe9a9511F7d86F4f4bAc3f8c4 |
 
-| Rinkeby commit-chain | Value |
+| Rinkeby | Value |
 | :--- | :--- |
 | NOCUST smart-contract address \(`contractAddress`\) | 0x6B9f10931E88349A572F2f0883E49528902B4b5D |
-| Commit-Chain API URL \(`hubApiUrl`\) | [https://rinkeby.liquidity.network/](http://rinkeby.liquidity.network/) |
+| Hub API URL \(`hubApiUrl`\) | [https://rinkeby.liquidity.network/](http://rinkeby.liquidity.network/) |
 | Test ERC-20 contract address | 0xA9F86DD014C001Acd72d5b25831f94FaCfb48717 |
 
-The following is a test commit-chain on a private blockchain with a shorter block interval \(4 seconds instead of 15 seconds\) and a shorter round time \(4 minutes instead of 36 hours\). This allows developers to test features much faster than waiting for long round times 😁.
+The following is a test NOCUST on a private blockchain with a shorter block interval \(6 seconds instead of 15 seconds\) and a shorter checekpoint round time \(6 minutes instead of 36 hours\). This allows developers to test features much faster than waiting for long round times 😁.
 
 Please do initiate Web3 with a HTTP provider given the RPC URL provided in the following table.
 
-| Private test commit-chain |  |
+| Limbo test commit-chain |  |
 | :--- | :--- |
 | NOCUST smart-contract address \(`contractAddress`\) | 0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7 |
-| Commit-Chain API URL \(`hubApiUrl`\) | [https://limbo.liquidity.network/](https://limbo.liquidity.network/admission/) |
+| Hub API URL \(`hubApiUrl`\) | [https://limbo.liquidity.network/](https://limbo.liquidity.network/admission/) |
 | Test ERC-20 contract address | 0xe982E462b094850F12AF94d21D470e21bE9D0E9C |
 | Ethereum node RPC URL | [https://limbo.liquidity.network/ethrpc](https://limbo.liquidity.network/ethrpc) |
 
-### Commit-Chain Transfer - Full Example
+### NOCUST Transfer - Full Example
 
 The following code sets up the client and transfers 0 fETH 🤪 from Bob 🙋‍♂️ to Alice 🙋‍♀️ \(test using node\).
 
@@ -145,9 +145,9 @@ const sendToALice = async () => {
 sendToALice()
 ```
 
-### Deposits \(Ethereum ➡️ Commit-Chain\)
+### Deposits \(Ethereum ➡️ NOCUST\)
 
-In order to make transfers, you need to have commit-chain funds. Commit-chain funds are simply funds deposited into the NOCUST smart-contract, and can be done through the client as follows.
+To make transfers, you need to have NOCUST funds. NOCUST funds are simply funds deposited into the NOCUST smart-contract, which can be done through the client as follows.
 
 ```typescript
 const transactionHash : string = await lqdManager.deposit(
@@ -158,7 +158,7 @@ const transactionHash : string = await lqdManager.deposit(
 );
 ```
 
-The function `deposit()` makes a contract call to the NOCUST smart contract with the specified amount. The commit-chain funds are available after `60` block confirmation. To verify the commit-chain balance, you can call the `getOffChainBalance()` function. Note that `deposit()`and `getoffChainBalance()` take a parameter `tokenAddress` to similarly manipulate ERC-20 tokens.
+The function `deposit()` makes a contract call to the NOCUST smart contract with the specified amount. The commit-chain funds are available after `60` block confirmation. To check your NOCUST balance, you can call the `getOffChainBalance()` function. Note that `deposit()`and `getoffChainBalance()` take a parameter `tokenAddress` to similarly manipulate ERC-20 tokens.
 
 ```typescript
 const balance : BigNumber = await lqdManager.getOffChainBalance(bob);
@@ -167,11 +167,11 @@ console.log("Bob's commit-chain balance is: ", balance.toString())
 
 ⚠️ Don't forget to provide a [transfer allowance](https://medium.com/ethex-market/erc20-approve-allow-explained-88d6de921ce9) to the NOCUST contract for the ERC-20 you wish to use.
 
-### Commit-Chain Transfers \(🙋‍♂️ ➡️ 🙋‍♀️\)
+### NOCUST Transfers \(🙋‍♂️ ➡️ 🙋‍♀️\)
 
-Commit-Chain transfers are free of gas and instant! There are two modes to send them.
+NOCUST transfers are free of gas and instant! There are two modes to send them.
 
-* **Active Delivery:** The NOCUST commit-chain currently requires the recipient of a transfer to be online \(to sign a message to receive a commit-chain transfer\). Once the library is setup and after calling the `register` function, transfers are automatically accepted.
+* **Active Delivery:** NOCUST currently requires the recipient of a transfer to be online \(to sign a message to receive a NOCUST transfer\). Once the library is setup and after calling the `register` function, transfers are automatically accepted.
 * **Passive Delivery \[soon\]:** We will soon be releasing an upgrade to NOCUST to allow a client to receive a transaction while **offline** 👻.
 
 #### Listening for Incoming Transfers
@@ -211,9 +211,9 @@ function async register() {
 register()
 ```
 
-#### ERC-20 Transfers
+#### NOCUST ERC-20 Transfers
 
-NOCUST 🌊 support the transfer of ERC-20 tokens. The operator, however, chooses which tokens can be used on the commit-chain. To see which tokens are currently supported by a commit-chain, call `getSupportedTokens()`:
+NOCUST 🌊 support the transfer of ERC-20 tokens. The hub decides which tokens can be used on NOCUST. To see which tokens are currently supported by a NOCUST hub, call `getSupportedTokens()`:
 
 ```typescript
 const supportedTokenArray : string[] = await lqdManager.getSupportedTokens()
@@ -221,9 +221,9 @@ const NocustContract : string = supportedTokenArray[0]
 const tokenXYZcontract : string = supportedTokenArray[1]
 ```
 
-`supportedTokenArray` contains an array of ERC-20 smart-contract addresses. The address at index 0 is the address of the NOCUST smart-contract \(reflecting the fETH on the commit-chain\).
+`supportedTokenArray` contains an array of ERC-20 smart-contract addresses. The address at index 0 is the address of the NOCUST smart-contract \(reflecting the fETH on the NOCUST commit-chain\).
 
-With the help of the `register()` function, we can tell the operator which tokens we want to use:
+With the help of the `register()` function, we can tell the hub which tokens we want to use:
 
 ```typescript
 await lqdManager.register(bob, tokenXYZcontract)
@@ -241,11 +241,11 @@ The register function always registers fETH by default and registers the token\(
    });
 ```
 
-### Withdrawals \(Commit-Chain ➡️ Ethereum\)
+### Withdrawals \(NOCUST ➡️ Ethereum\)
 
-A withdrawal allows the user to send commit-chain funds back to Ethereum \(also called an exit\). Withdrawals take time ⌛ and are a 2 step process requiring 2 separate contract calls.
+A withdrawal allows the user to send NOCUST funds back to Ethereum \(also called an exit\). Withdrawals take time ⌛ and are a two-step process requiring two separate contract calls.
 
-The amount of commit-chain funds available for withdrawal may differ from the current commit-chain balance. Recently acquired commit-chain funds cannot be withdrawn instantly, they will be made fully available over time. Recently acquired funds will need between 36h and 72h \(one full round\) to be available. To check the current balance available for withdrawal call the function `getWithdrawalLimit()` :
+The amount of NOCUST funds available for withdrawal may differ from the current NOCUST balance. Recently acquired NOCUST funds cannot be withdrawn instantly, and need between 36h and 72h \(one full round\) to be available. To check the current balance available for withdrawal call the function `getWithdrawalLimit()` :
 
 ```typescript
 const withdrawalLimit : BigNumber = lqdManager.getWithdrawalLimit(bob)
@@ -262,7 +262,7 @@ const transactionHash : string = await lqdManager.withdrawalRequest(
 );
 ```
 
-This issues a contract call to initiate a withdrawal. After 36h to 72h \(corresponding to one full commit-chain round\), the withdrawal needs to be confirmed. To query how much time is left before the withdrawal can be confirmed you can call `getBlocksToWithdrawalConfirmation()`:
+This makes a contract call to initiate a withdrawal. After 36h to 72h \(corresponding to one full NOCUST round\), the withdrawal needs to be confirmed. To query how much time is left before the withdrawal can be confirmed you can call `getBlocksToWithdrawalConfirmation()`:
 
 ```typescript
 const blocksToConfirmation : number = await lqdManager.getBlocksToWithdrawalConfirmation(bob)
