@@ -30,7 +30,7 @@ The following figure illustrates the diffrent roles of each component in a NOCUS
 To install the NOCUST JavaScript API, simply run:
 
 ```text
-npm install nocust-client
+➜ npm install nocust-client	
 ```
 
 The client requires Web3 \(version 1.0.0-beta.36 only for now\) to interact with the Ethereum Network. Additionally, as we are manipulating exclusively Ether amounts in Wei \(10^-18 Ether\), we use the `bignumber.js` library for Ether and token amounts \([to go beyond the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin)\).
@@ -38,7 +38,7 @@ The client requires Web3 \(version 1.0.0-beta.36 only for now\) to interact with
 Required dependencies to be installed:
 
 ```text
-npm install web3@1.0.0-beta.36 bignumber.js
+➜ npm install web3@1.0.0-beta.36 bignumber.js
 ```
 
 For typescript users we recomment the following configuration in your `tsconfig.json` file.
@@ -97,12 +97,16 @@ Please do initiate Web3 with a HTTP provider given the RPC URL provided in the f
 
 ### NOCUST Transfer - Full Example
 
-The following code sets up the client and transfers 0 fETH 🤪 from Bob 🙋‍♂️ to Alice 🙋‍♀️.
+The following JavaScript code sets up the client and transfers 0 fETH 🤪 from Bob 🙋‍♂️ to Alice 🙋‍♀️.
 
 ```typescript
-import Web3 from 'web3' // Web3 1.0.0-beta.36 only for now
-import BigNumber from "bignumber.js"
-import { LQDManager } from 'nocust-client'
+const Web3 = require('web3') // Web3 1.0.0-beta.36 only for now
+const BigNumber = require('bignumber.js')
+const { LQDManager } = require('nocust-client')
+// For typescript use:
+//import web3 from 'web3' // Web3 1.0.0-beta.36 only for now
+//import BigNumber from "bignumber.js"
+//import { LQDManager } from 'nocust-client'
 
 const bob = '0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0';
 const alice = '0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b';
@@ -145,6 +149,18 @@ const sendToALice = async () => {
 sendToALice()
 ```
 
+To execute example above, follow those steps:
+
+```text
+➜ npm install nocust-client	
+➜ npm install web3@1.0.0-beta.36 bignumber.js
+➜ # copy and paste the text above into `test.js`
+➜ node test.js
+Transfer to Alice sent ! Transaction ID:  504
+```
+
+We tested this example with `npm` version 5.7.1 and `node` version 8.5.0. 
+
 ### Deposits \(Ethereum ➡️ NOCUST\)
 
 To make transfers, you need to have NOCUST funds. NOCUST funds are simply funds deposited into the NOCUST smart-contract, which can be done through the client as follows.
@@ -179,8 +195,11 @@ NOCUST transfers are free of gas and instant! There are two modes to send them.
 If you want to trigger a special event upon an incoming transaction, you can define the following catcher:
 
 ```typescript
-import web3 from 'Web3' // Web3 1.0.x
-import { LQDManager } from 'nocust-client'
+const web3 = require('web3') // Web3 1.0.0-beta.36 only for now
+const { LQDManager } = require('nocust-client')
+// For typescript use:
+//import web3 from 'Web3' // Web3 1.0.x
+//import { LQDManager } from 'nocust-client'
 const alice = '0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b';
 const alicePrivateKey = '0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c'
 
@@ -195,7 +214,8 @@ const lqdManager = new LQDManager({
   contractAddress: '0x6B9f10931E88349A572F2f0883E49528902B4b5D',
 });
 
-function async register() {
+const register = async () => {
+  //function async register() {
   // Register an address to be used with the LQD manager
   const incomingTransferEventEmitter = await lqdManager.register(alice)
 
