@@ -97,7 +97,7 @@ Please do initiate Web3 with a HTTP provider given the RPC URL provided in the f
 
 ### NOCUST Transfer - Full Example
 
-The following code sets up the client and transfers 0 fETH 🤪 from Bob 🙋‍♂️ to Alice 🙋‍♀️ \(test using node\).
+The following code sets up the client and transfers 0 fETH 🤪 from Bob 🙋‍♂️ to Alice 🙋‍♀️.
 
 ```typescript
 import Web3 from 'web3' // Web3 1.0.0-beta.36 only for now
