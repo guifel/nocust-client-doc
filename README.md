@@ -1,5 +1,12 @@
 # Getting Started
 
+#### TLDR;
+
+Download [this HTML/JS zip file](http://liquidity.network/media/liquidity_browser_app.zip), extract, and launch index.html in your browser.
+It will automagically register two new wallets with a NOCUST hub, and make a transfer among them 😮.
+
+## Intro
+
 Liquidity Network's underlying technology are NOCUST commit-chains, a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet!
 
 A commit-chain is a *chain of commits* ⛓️, that means that NOCUST is committing regularly, every *round*, a commit of the commit-chain to the parent Ethereum chain. The commit-chain is run by a **non-custodial hub**, or operator, and clients communicate with the hub.
@@ -97,29 +104,42 @@ Please do initiate Web3 with a HTTP provider given the RPC URL provided in the f
 
 ### NOCUST Transfer - Full Example
 
+We offer two out of the box examples 😍
+
+#### `Browser` Example
+
+Download [this HTML/JS zip file](http://liquidity.network/media/liquidity_browser_app.zip), extract, and launch index.html in your browser. It will automagically register two new wallets with the hub, and make a transfer among them.
+
+#### `Node` Example
+
 The following JavaScript code sets up the client and transfers 0 fETH 🤪 from Bob 🙋‍♂️ to Alice 🙋‍♀️.
+
+To execute the example code below, follow those steps:
+
+```text
+➜ npm install nocust-client	
+➜ npm install web3@1.0.0-beta.36 bignumber.js
+➜ # copy and paste the code above into `test.js`
+➜ node test.js
+Transfer to Alice sent ! Transaction ID:  504
+```
+
+We tested this example with `npm` version 5.7.1 and `node` version 8.5.0. 
 
 ```typescript
 const Web3 = require('web3') // Web3 1.0.0-beta.36 only for now
 const BigNumber = require('bignumber.js')
 const { LQDManager } = require('nocust-client')
-// For typescript use:
-//import web3 from 'web3' // Web3 1.0.0-beta.36 only for now
-//import BigNumber from "bignumber.js"
-//import { LQDManager } from 'nocust-client'
-
-const bob = '0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0';
-const alice = '0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b';
-
-// We provide 2 private keys (do not do this in production..)
-const bobPrivateKey = '0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1'
-const alicePrivateKey ='0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c'
 
 // Setup web3 with Infura
 const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/'));
-// Add the private keys to web3 for signing
-web3.eth.accounts.wallet.add(bobPrivateKey)
-web3.eth.accounts.wallet.add(alicePrivateKey)
+
+// create 2 new wallets
+const wallets = web3.eth.accounts.wallet.create(2);
+const BOB_PUB = wallets[0].address
+const BOB_PRIV =  wallets[0].privateKey
+const ALICE_PUB = wallets[1].address
+const ALICE_PRIV = wallets[1].privateKey
 
 // Specify to which commit-chain we want to connect
 const lqdManager = new LQDManager({
@@ -130,36 +150,22 @@ const lqdManager = new LQDManager({
 
 const sendToALice = async () => {
   // Register an address with the commit-chain
-  await lqdManager.register(bob)
-  await lqdManager.register(alice)
+  await lqdManager.register(BOB_PUB)
+  await lqdManager.register(ALICE_PUB)
 
   // Send 0.00 fETH on the commit-chain to Alice  
   // In this example, we send 0 fETH, because Alice doesn't have any funds yet, and yes, we can send 0-value commit-chain transaction, haha
   const txId = await lqdManager.postTransfer({
-      to: alice,
+      to: ALICE_PUB,
       // 0.00 fEther in Wei as BigNumber. 
       amount: (new BigNumber(0.00)).shiftedBy(-18),
-      from: bob,
+      from: BOB_PUB,
    });
-
   console.log("Transfer to Alice sent ! Transaction ID: ", txId)
-
 }
 
 sendToALice()
 ```
-
-To execute example above, follow those steps:
-
-```text
-➜ npm install nocust-client	
-➜ npm install web3@1.0.0-beta.36 bignumber.js
-➜ # copy and paste the text above into `test.js`
-➜ node test.js
-Transfer to Alice sent ! Transaction ID:  504
-```
-
-We tested this example with `npm` version 5.7.1 and `node` version 8.5.0. 
 
 ### Deposits \(Ethereum ➡️ NOCUST\)
 
@@ -167,7 +173,7 @@ To make transfers, you need to have NOCUST funds. NOCUST funds are simply funds 
 
 ```typescript
 const transactionHash : string = await lqdManager.deposit(
-  bob,                             // Account from which to make a deposit (its private key needs to be in the Web3 instance)
+  BOB_PUB,                             // Account from which to make a deposit (its private key needs to be in the Web3 instance)
   web3.utils.toWei(0.5,'ether'), // Amount to deposit
   web3.utils.toWei(10,'gwei'),   // Gas price, 10 Gwei
   150000                         // Gas Limit
@@ -195,17 +201,16 @@ NOCUST transfers are free of gas and instant! There are two modes to send them.
 If you want to trigger a special event upon an incoming transaction, you can define the following catcher:
 
 ```typescript
-const web3 = require('web3') // Web3 1.0.0-beta.36 only for now
+const Web3 = require('web3') // Web3 1.0.0-beta.36 only for now
 const { LQDManager } = require('nocust-client')
-// For typescript use:
-//import web3 from 'Web3' // Web3 1.0.x
-//import { LQDManager } from 'nocust-client'
-const alice = '0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b';
-const alicePrivateKey = '0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c'
 
 // Setup web3 with Infura
-const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/'));
-web3.eth.accounts.wallet.add(alicePrivateKey) // Add private to web3 for signing
+const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/'));
+
+// create 2 new wallets
+const wallets = web3.eth.accounts.wallet.create(1);
+const ALICE_PUB = wallets[0].address
+const ALICE_PRIV = wallets[0].privateKey
 
 // Setup the LQDManager
 const lqdManager = new LQDManager({
@@ -215,9 +220,8 @@ const lqdManager = new LQDManager({
 });
 
 const register = async () => {
-  //function async register() {
   // Register an address to be used with the LQD manager
-  const incomingTransferEventEmitter = await lqdManager.register(alice)
+  const incomingTransferEventEmitter = await lqdManager.register(ALICE_PUB)
 
   // Trigger a log upon an incoming transfer
   incomingTransferEventEmitter.on('IncomingTransfer',
@@ -246,7 +250,7 @@ const tokenXYZcontract : string = supportedTokenArray[1]
 With the help of the `register()` function, we can tell the hub which tokens we want to use:
 
 ```typescript
-await lqdManager.register(bob, tokenXYZcontract)
+await lqdManager.register(BOB_PUB, tokenXYZcontract)
 // Bob can receive fETH and the fToken at the address `tokenXYZcontract`
 ```
 
@@ -254,9 +258,9 @@ The register function always registers fETH by default and registers the token\(
 
 ```typescript
   const txId : number = await lqdManager.sendTransfer({
-      to: alice,
+      to: ALICE_PUB,
       amount: web3.utils.toWei(0.01,'ether'), // Amount
-      from: bob,
+      from: BOB_PUB,
       tokenAddress: tokenXYZ,
    });
 ```
@@ -275,7 +279,7 @@ To initiate a withdrawal, call `withdrawalRequest()` with an amount &lt;= `withd
 
 ```typescript
 const transactionHash : string = await lqdManager.withdrawalRequest(
-  bob,                           // Account from which to make the withdrawal
+  BOB_PUB,                       // Account from which to make the withdrawal
   web3.utils.toWei(0.5,'ether'), // Amount to withdraw
   web3.utils.toWei(10,'gwei'),   // Gas price, 10 Gwei
   300000                         // Gas Limit
@@ -285,7 +289,7 @@ const transactionHash : string = await lqdManager.withdrawalRequest(
 This makes a contract call to initiate a withdrawal. After 36h to 72h \(corresponding to one full NOCUST round\), the withdrawal needs to be confirmed. To query how much time is left before the withdrawal can be confirmed you can call `getBlocksToWithdrawalConfirmation()`:
 
 ```typescript
-const blocksToConfirmation : number = await lqdManager.getBlocksToWithdrawalConfirmation(bob)
+const blocksToConfirmation : number = await lqdManager.getBlocksToWithdrawalConfirmation(BOB_PUB)
 ```
 
 `getBlocksToWithdrawalConfirmation()` returns the number of block confirmations required before to confirm a withdrawal. If the function returns `0`, the withdrawal is ready for confirmation. Note that the function will return `-1` if there is no withdrawal pending.
@@ -294,7 +298,7 @@ Finally, to confirm the withdrawal, you can call `withdrawalConfirmation()`:
 
 ```typescript
 const transactionHash : string = await lqdManager.withdrawalConfirmation(
-  bob,                             // Account from which to make the withdrawal
+  BOB_PUB,                       // Account from which to make the withdrawal
   web3.utils.toWei(10,'gwei'),   // Gas price, 10 Gwei
   300000                         // Gas Limit
 );
