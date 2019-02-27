@@ -46,7 +46,7 @@ Similarly to the `deposit` function but prior check to send the deposit transact
 | amount | `BigNumber` \| `BN` \| `string` |  Amount to deposit, this amount needs to be available on-chain for the specified address. |
 | gasPrice | `BigNumber` \| `BN` \| `string` |  Gas price for the on-chain transaction. |
 | gas | `number` |  Gas limit for the on-Chain transaction. Around 100'000 gas is advised. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. |
 
 **Returns:** `Promise`<`string`>
 Hash of the on-chain transaction of the deposit.
@@ -85,7 +85,7 @@ Make an on-chain transaction to deposit funds into the NOCUST hub. This funds ca
 | amount | `BigNumber` \| `BN` \| `string` |  Amount to deposit, this amount needs to be available on-chain for the specified address. |
 | gasPrice | `BigNumber` \| `BN` \| `string` |  Gas price for the on-chain transaction. |
 | gas | `number` |  Gas limit for the on-Chain transaction. Around 100'000 gas is advised. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`string`>
 Hash of the on-chain transaction of the deposit.
@@ -132,8 +132,8 @@ Get the number of blocks until it is possible to send the withdrawal confirmatio
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Address that started the withdrawal. |
-| `Optional` txHash | `string` |
-| `Optional` tokenAddress | `string` |
+| `Optional` txHash | `string` |  Transaction hash of the on-chain transaction of the of the withdrawal request. Will use the oldest pending withdrawal if not specified. |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`number`>
 
@@ -174,7 +174,7 @@ Fetch the current NOCUST balance.
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Targeted Ethereum address. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`BigNumber`>
 Nocust balance
@@ -193,7 +193,7 @@ Get current on-chain balance.
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Targeted Ethereum address. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`BigNumber`>
 On-chain balance.
@@ -203,7 +203,7 @@ ___
 
 ##  getOrderBook
 
-▸ **getOrderBook**(buyTokenAddress: *`string`*, sellTokenAddress: *`string`*): `Promise`<`OrderBookDataInterface`>
+▸ **getOrderBook**(buyTokenAddress: *`string`*, sellTokenAddress: *`string`*): `Promise`<[OrderBookDataInterface](_interfaces_data_interface_.orderbookdatainterface.md)>
 
 **Parameters:**
 
@@ -212,18 +212,18 @@ ___
 | buyTokenAddress | `string` |  \- |
 | sellTokenAddress | `string` |  \- |
 
-**Returns:** `Promise`<OrderBookDataInterface>
+**Returns:** `Promise`<[OrderBookDataInterface](_interfaces_data_interface_.orderbookdatainterface.md)>
 
 ___
 <a id="getsladetail"></a>
 
 ##  getSLADetail
 
-▸ **getSLADetail**(): `Promise`<`SLADetailsInterface`>
+▸ **getSLADetail**(): `Promise`<[SLADetailsInterface](_interfaces_data_interface_.sladetailsinterface.md)>
 
 Get informations about the SLA pricing model.
 
-**Returns:** `Promise`<`SLADetailsInterface`>
+**Returns:** `Promise`<[SLADetailsInterface](_interfaces_data_interface_.sladetailsinterface.md)>
 Object with the token address with which to pay the SLA, the cost/amount of the SLA in this token, the recipient of the SLA payment, the transaction limit per month without SLA.
 
 ___
@@ -261,7 +261,7 @@ ___
 
 ##  getTransaction
 
-▸ **getTransaction**(transactionId: *`number`*): `Promise`<`TransferDataInterface`>
+▸ **getTransaction**(transactionId: *`number`*): `Promise`<[TransferDataInterface](_interfaces_data_interface_.transferdatainterface.md)>
 
 Fetch the transaction details given a transaction ID
 
@@ -271,7 +271,7 @@ Fetch the transaction details given a transaction ID
 | ------ | ------ | ------ |
 | transactionId | `number` |  Transaction ID of the transaction to fetch |
 
-**Returns:** `Promise`<`TransferDataInterface`>
+**Returns:** `Promise`<[TransferDataInterface](_interfaces_data_interface_.transferdatainterface.md)>
 Transaction details
 }`
 
@@ -280,7 +280,7 @@ ___
 
 ##  getTransactionsForAddress
 
-▸ **getTransactionsForAddress**(address: *`string`*, tokenAddress?: *`string`*, roundNumber?: *`number`*): `Promise`<`TransferDataInterface`>
+▸ **getTransactionsForAddress**(address: *`string`*, tokenAddress?: *`string`*, roundNumber?: *`number`*): `Promise`<[TransferDataInterface](_interfaces_data_interface_.transferdatainterface.md)[]>
 
 Get the list of transactions for a given address and token (Incoming and outgoing).
 
@@ -289,10 +289,10 @@ Get the list of transactions for a given address and token (Incoming and outgoin
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Targeted Ethereum address. |
-| `Optional` tokenAddress | `string` |
-| `Optional` roundNumber | `number` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
+| `Optional` roundNumber | `number` |  Get the transactions only starting from a specific round number. Return all transactions if unspecified. |
 
-**Returns:** `Promise`<`TransferDataInterface`>
+**Returns:** `Promise`<[TransferDataInterface](_interfaces_data_interface_.transferdatainterface.md)[]>
 Array of transactions
 
 ___
@@ -300,7 +300,7 @@ ___
 
 ##  getWalletState
 
-▸ **getWalletState**(address: *`string`*, tokenAddress?: *`string`*): `Promise`<`WalletState`>
+▸ **getWalletState**(address: *`string`*, tokenAddress?: *`string`*): `Promise`<[WalletState](../classes/_models_state_wallet_state_model_.walletstate.md)>
 
 Get the `WalletState` object for lower level API use.
 
@@ -309,9 +309,9 @@ Get the `WalletState` object for lower level API use.
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Targeted Ethereum address. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
-**Returns:** `Promise`<`WalletState`>
+**Returns:** `Promise`<[WalletState](../classes/_models_state_wallet_state_model_.walletstate.md)>
 
 ___
 <a id="getwithdrawalfee"></a>
@@ -345,7 +345,7 @@ Withdrawals are limited to a certain amount (Because funds need to committed int
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Targeted Ethereum address. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`BigNumber`>
 Withdrawal limit.
@@ -355,7 +355,7 @@ ___
 
 ##  incomingTransactionObservable
 
-▸ **incomingTransactionObservable**(address: *`string`*, tokenAddress?: *`string`*): `Observable`<`TransferDataInterface`>
+▸ **incomingTransactionObservable**(address: *`string`*, tokenAddress?: *`string`*): `Observable`<[TransferDataInterface](_interfaces_data_interface_.transferdatainterface.md)>
 
 Return an observable to notify of incoming transfers.
 
@@ -364,9 +364,9 @@ Return an observable to notify of incoming transfers.
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Address to watch for. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. Can be set to \`'all'\` to be notified for all tokens with the same observable. |
 
-**Returns:** `Observable`<`TransferDataInterface`>
+**Returns:** `Observable`<[TransferDataInterface](_interfaces_data_interface_.transferdatainterface.md)>
 Observable of incoming transfers
 
 ___
@@ -383,7 +383,7 @@ Check if an address is registered with the nocust hub.
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Address to check. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`boolean`>
 Return `true` if the registration is successful
@@ -402,7 +402,7 @@ Check whether an address is registered with the payment hub and can therefore re
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Targeted Ethereum address. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -435,7 +435,7 @@ Make an on-chain transaction to initiate a delivery challenge.
 | txId | `number` |  Transaction id to challenge for delivery. |
 | gasPrice | `any` |  Gas price for the on-chain transaction. |
 | gas | `any` |  Gas limit for the off-Chain transaction. Around 350'000 gas is advised. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`string`>
 
@@ -455,7 +455,7 @@ Make an on-chain transaction to initiate a state update challenge.
 | address | `string` |  Targeted Ethereum address. |
 | gasPrice | `any` |  Gas price for the on-chain transaction. |
 | gas | `any` |  Gas limit for the off-Chain transaction. Around 350'000 gas is advised. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`string`>
 
@@ -475,7 +475,7 @@ Make an on-chain transaction to recover funds whenever the hub falls into recove
 | address | `string` |  Targeted Ethereum address. |
 | gasPrice | `any` |  Gas price for the on-chain transaction. |
 | gas | `any` |  Gas limit for the off-Chain transaction. Around 350'000 gas is advised. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`string`>
 
@@ -493,7 +493,7 @@ Register an address for a given token with the payment hub. An address needs to 
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Address to register with the payment hub . |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`void`>
 
@@ -521,7 +521,7 @@ ___
 
 ##  sendTransaction
 
-▸ **sendTransaction**(transfer: *NocustTransfer*): `Promise`<`number`>
+▸ **sendTransaction**(transfer: *[NocustTransfer](_interfaces_nocust_manager_interface_.nocusttransfer.md)*): `Promise`<`number`>
 
 Send a NOCUST transfer.
 
@@ -529,7 +529,7 @@ Send a NOCUST transfer.
 
 | Name | Type | Description |
 | ------ | ------ | ------ |
-| transfer | NocustTransfer |  Parameter object of an off-chain transfer. |
+| transfer | [NocustTransfer](_interfaces_nocust_manager_interface_.nocusttransfer.md) |  Parameter object of an off-chain transfer. |
 
 **Returns:** `Promise`<`number`>
 Transaction Id of the NOCUST transfer
@@ -548,7 +548,7 @@ Force synchronize the wallet of the given public key for the given token. The re
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Targeted Ethereum address |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified |
 
 **Returns:** `Promise`<`void`>
 
@@ -568,7 +568,7 @@ Make an on-chain transaction to confirm a withdrawal previously initialized and 
 | address | `string` |  Targeted Ethereum address. |
 | gasPrice | `BigNumber` \| `BN` \| `string` |  Gas price for the on-chain transaction. |
 | gas | `number` |  Gas limit for the on-Chain transaction. Around 100'000 gas is advised. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`string`>
 Hash of the on-chain transaction of the withdrawal confirmation.
@@ -580,7 +580,7 @@ ___
 
 ▸ **withdrawalRequest**(address: *`string`*, amount: *`BigNumber` \| `BN` \| `string`*, gasPrice: *`BigNumber` \| `BN` \| `string`*, gas: *`number`*, tokenAddress?: *`string`*): `Promise`<`string`>
 
-Make an on-chain transaction to initiate a withdrawal to remove the funds from the NOCUST smart contract and to get them at the specified address. The amount specified needs to be available for withdrawal . The withdrawal will have to be confirmed, after a certain period of time (Currently between 36 and 72h). On the top the gas fee, this function will take an Ether fee from the on-chain balance for the hub operator.
+Make an on-chain transaction to initiate a withdrawal to remove the funds from the NOCUST smart contract and to get them at the specified address. The amount specified needs [to be available for withdrawal](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanager-getwithdrawallimit) . The withdrawal will have to be [confirmed](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanager-withdrawalconfirmation) after a certain period of time (Currently between 36 and 72h). On the top the gas fee, this function will take an [Ether fee](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanager-getwithdrawalfee) from the on-chain balance for the hub operator.
 
 **Parameters:**
 
@@ -590,7 +590,7 @@ Make an on-chain transaction to initiate a withdrawal to remove the funds from t
 | amount | `BigNumber` \| `BN` \| `string` |  Amount to deposit, this amount needs to be available on-chain for the specified address |
 | gasPrice | `BigNumber` \| `BN` \| `string` |  Gas price for the on-chain transaction. |
 | gas | `number` |  Gas limit for the on-chain transaction. Around 100'000 gas is advised. |
-| `Optional` tokenAddress | `string` |
+| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`<`string`>
 Hash of the on-chain transaction of the withdrawal request.
