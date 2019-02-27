@@ -261,7 +261,7 @@ ___
 
 ##  getTransaction
 
-▸ **getTransaction**(transactionId: *`number`*): `Promise`<[TransferDataInterface](_interfaces_data_interface_.transferdatainterface.md)>
+▸ **getTransaction**(transactionId: *`number`*): `Promise`<`TransferDataInterface`>
 
 Fetch the transaction details given a transaction ID
 
@@ -271,7 +271,7 @@ Fetch the transaction details given a transaction ID
 | ------ | ------ | ------ |
 | transactionId | `number` |  Transaction ID of the transaction to fetch |
 
-**Returns:** `Promise`<[TransferDataInterface](_interfaces_data_interface_.transferdatainterface.md)>
+**Returns:** `Promise`<`TransferDataInterface`>
 Transaction details
 }`
 
@@ -280,7 +280,7 @@ ___
 
 ##  getTransactionsForAddress
 
-▸ **getTransactionsForAddress**(address: *`string`*, tokenAddress?: *`string`*, roundNumber?: *`number`*): `Promise`<[TransferDataInterface](_interfaces_data_interface_.transferdatainterface.md)[]>
+▸ **getTransactionsForAddress**(address: *`string`*, tokenAddress?: *`string`*, roundNumber?: *`number`*): `Promise`<`TransferDataInterface`[]>
 
 Get the list of transactions for a given address and token (Incoming and outgoing).
 
@@ -292,7 +292,7 @@ Get the list of transactions for a given address and token (Incoming and outgoin
 | `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 | `Optional` roundNumber | `number` |  Get the transactions only starting from a specific round number. Return all transactions if unspecified. |
 
-**Returns:** `Promise`<[TransferDataInterface](_interfaces_data_interface_.transferdatainterface.md)[]>
+**Returns:** `Promise`<`TransferDataInterface`[]>
 Array of transactions
 
 ___
@@ -355,7 +355,7 @@ ___
 
 ##  incomingTransactionObservable
 
-▸ **incomingTransactionObservable**(address: *`string`*, tokenAddress?: *`string`*): `Observable`<[TransferDataInterface](_interfaces_data_interface_.transferdatainterface.md)>
+▸ **incomingTransactionObservable**(address: *`string`*, tokenAddress?: *`string`*): `Observable`<`TransferDataInterface`>
 
 Return an observable to notify of incoming transfers.
 
@@ -366,7 +366,7 @@ Return an observable to notify of incoming transfers.
 | address | `string` |  Address to watch for. |
 | `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. Can be set to \`'all'\` to be notified for all tokens with the same observable. |
 
-**Returns:** `Observable`<[TransferDataInterface](_interfaces_data_interface_.transferdatainterface.md)>
+**Returns:** `Observable`<`TransferDataInterface`>
 Observable of incoming transfers
 
 ___
@@ -521,7 +521,7 @@ ___
 
 ##  sendTransaction
 
-▸ **sendTransaction**(transfer: *[NocustTransfer](_interfaces_nocust_manager_interface_.nocusttransfer.md)*): `Promise`<`number`>
+▸ **sendTransaction**(transfer: *NocustTransfer*): `Promise`<`number`>
 
 Send a NOCUST transfer.
 
@@ -529,7 +529,7 @@ Send a NOCUST transfer.
 
 | Name | Type | Description |
 | ------ | ------ | ------ |
-| transfer | [NocustTransfer](_interfaces_nocust_manager_interface_.nocusttransfer.md) |  Parameter object of an off-chain transfer. |
+| transfer | NocustTransfer |  Parameter object of an off-chain transfer. |
 
 **Returns:** `Promise`<`number`>
 Transaction Id of the NOCUST transfer
@@ -580,7 +580,7 @@ ___
 
 ▸ **withdrawalRequest**(address: *`string`*, amount: *`BigNumber` \| `BN` \| `string`*, gasPrice: *`BigNumber` \| `BN` \| `string`*, gas: *`number`*, tokenAddress?: *`string`*): `Promise`<`string`>
 
-Make an on-chain transaction to initiate a withdrawal to remove the funds from the NOCUST smart contract and to get them at the specified address. The amount specified needs [to be available for withdrawal](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanager-getwithdrawallimit) . The withdrawal will have to be [confirmed](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanager-withdrawalconfirmation) after a certain period of time (Currently between 36 and 72h). On the top the gas fee, this function will take an [Ether fee](https://github.com/guifel/nocust-client-doc/tree/4b0bde24710b10d3983ca11a3408011caa8678b0/reference-api.md#lqdmanager-getwithdrawalfee) from the on-chain balance for the hub operator.
+Make an on-chain transaction to initiate a withdrawal to remove the funds from the NOCUST smart contract and to get them at the specified address. The amount specified needs to be available for withdrawal . The withdrawal will have to be confirmed after a certain period of time (Currently between 36 and 72h). On the top the gas fee, this function will take an Ether fee from the on-chain balance for the hub operator.
 
 **Parameters:**
 
