@@ -203,7 +203,7 @@ ___
 
 ##  getOrderBook
 
-▸ **getOrderBook**(buyTokenAddress: *`string`*, sellTokenAddress: *`string`*): `Promise`<[OrderBookDataInterface](_interfaces_data_interface_.orderbookdatainterface.md)>
+▸ **getOrderBook**(buyTokenAddress: *`string`*, sellTokenAddress: *`string`*): `Promise`<`OrderBookDataInterface`>
 
 **Parameters:**
 
@@ -212,18 +212,18 @@ ___
 | buyTokenAddress | `string` |  \- |
 | sellTokenAddress | `string` |  \- |
 
-**Returns:** `Promise`<[OrderBookDataInterface](_interfaces_data_interface_.orderbookdatainterface.md)>
+**Returns:** `Promise`<`OrderBookDataInterface`>
 
 ___
 <a id="getsladetail"></a>
 
 ##  getSLADetail
 
-▸ **getSLADetail**(): `Promise`<[SLADetailsInterface](_interfaces_data_interface_.sladetailsinterface.md)>
+▸ **getSLADetail**(): `Promise`<`SLADetailsInterface`>
 
 Get informations about the SLA pricing model.
 
-**Returns:** `Promise`<[SLADetailsInterface](_interfaces_data_interface_.sladetailsinterface.md)>
+**Returns:** `Promise`<`SLADetailsInterface`>
 Object with the token address with which to pay the SLA, the cost/amount of the SLA in this token, the recipient of the SLA payment, the transaction limit per month without SLA.
 
 ___
@@ -300,7 +300,7 @@ ___
 
 ##  getWalletState
 
-▸ **getWalletState**(address: *`string`*, tokenAddress?: *`string`*): `Promise`<[WalletState](../classes/_models_state_wallet_state_model_.walletstate.md)>
+▸ **getWalletState**(address: *`string`*, tokenAddress?: *`string`*): `Promise`<`WalletState`>
 
 Get the `WalletState` object for lower level API use.
 
@@ -311,7 +311,7 @@ Get the `WalletState` object for lower level API use.
 | address | `string` |  Targeted Ethereum address. |
 | `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. |
 
-**Returns:** `Promise`<[WalletState](../classes/_models_state_wallet_state_model_.walletstate.md)>
+**Returns:** `Promise`<`WalletState`>
 
 ___
 <a id="getwithdrawalfee"></a>
@@ -351,11 +351,11 @@ Withdrawals are limited to a certain amount (Because funds need to committed int
 Withdrawal limit.
 
 ___
-<a id="incomingtransactionobservable"></a>
+<a id="subscribetoincomingtransfer"></a>
 
-##  incomingTransactionObservable
+##  subscribeToIncomingTransfer
 
-▸ **incomingTransactionObservable**(address: *`string`*, tokenAddress?: *`string`*): `Observable`<`TransferDataInterface`>
+▸ **subscribeToIncomingTransfer**(address: *`string`*, callBack: *`function`*, tokenAddress?: *`any`*): `function`
 
 Return an observable to notify of incoming transfers.
 
@@ -364,10 +364,11 @@ Return an observable to notify of incoming transfers.
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Address to watch for. |
-| `Optional` tokenAddress | `string` |  Targeted ERC-20 token. Use Ether if not specified. Can be set to \`'all'\` to be notified for all tokens with the same observable. |
+| callBack | `function` |
+| `Optional` tokenAddress | `any` |
 
-**Returns:** `Observable`<`TransferDataInterface`>
-Observable of incoming transfers
+**Returns:** `function`
+Unsubscribe function
 
 ___
 <a id="isaddressregistered"></a>
