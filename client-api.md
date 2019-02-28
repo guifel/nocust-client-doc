@@ -254,7 +254,7 @@ ___
 Fetch the smart contract addresses of the supported token by the hub.
 
 **Returns:** `Promise`<`object`[]>
-Promise that resolves with an array of objects `{ address: string, name: string, short_name: string }` for each token supported by the hub. Address is the address of the ERC-20 contract of the token.
+Promise that resolves with an array of objects `{ tokenAddress: string, name: string, shortName: string }` for each token supported by the hub. Address is the address of the ERC-20 contract of the token.
 
 ___
 <a id="gettransaction"></a>
