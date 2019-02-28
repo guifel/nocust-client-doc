@@ -87,7 +87,7 @@ The following table shows a list of the currently deployed NOCUST instances.
 
 | Rinkeby | Value |
 | :--- | :--- |
-| NOCUST smart-contract address \(`contractAddress`\) | 0x6B9f10931E88349A572F2f0883E49528902B4b5D |
+| NOCUST smart-contract address \(`contractAddress`\) | 0x7e9c7846a22d4D6a8Fde0B586Ab1860B00316611 |
 | Hub API URL \(`hubApiUrl`\) | [https://rinkeby.liquidity.network/](http://rinkeby.liquidity.network/) |
 | Test ERC-20 contract address | 0xA9F86DD014C001Acd72d5b25831f94FaCfb48717 |
 
