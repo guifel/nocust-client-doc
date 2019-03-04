@@ -13,9 +13,9 @@ A commit-chain is a *chain of commits* ⛓️, that means that NOCUST is committ
 
 Contrary to side-chains, commit-chains don't need an additional consensus mechanism and rely on the security of the parent chain (here Ethereum). We refer the interested developer to a basic introduction of [basic introduction of NOCUST](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](./background.md), and for the formal geeks [we provide a paper](https://eprint.iacr.org/2018/642.pdf) 🤓 .
 
-For developers, we start by describing the JavaScript API for NOCUST 📱 (how to make transactions).
+For developers, we start by describing the JavaScript client library for NOCUST 📱 (how to make transactions).
 
-## NOCUST JavaScript API 📱
+## NOCUST JavaScript Client library 📱
 
 The `nocust-client` allows you to interact with the NOCUST 🌊 commit-chain.
 
@@ -129,7 +129,7 @@ We tested this example with `npm` version 5.7.1 and `node` version 8.5.0.
 ```typescript
 const Web3 = require('web3') // Web3 1.0.0-beta.36 only for now
 const BigNumber = require('bignumber.js')
-const { LQDManager } = require('nocust-client')
+const { NocustManager } = require('nocust-client')
 
 // Setup web3 with Infura
 const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/'));
@@ -142,20 +142,22 @@ const ALICE_PUB = wallets[1].address
 const ALICE_PRIV = wallets[1].privateKey
 
 // Specify to which commit-chain we want to connect
-const lqdManager = new LQDManager({
+const nocustManager = new NocustManager({
   rpcApi: web3,
   hubApiUrl: 'https://rinkeby.liquidity.network/',
-  contractAddress: '0x6B9f10931E88349A572F2f0883E49528902B4b5D',
+  contractAddress: '0x7e9c7846a22d4D6a8Fde0B586Ab1860B00316611',
   });
 
 const sendToALice = async () => {
-  // Register an address with the commit-chain
-  await lqdManager.register(BOB_PUB)
-  await lqdManager.register(ALICE_PUB)
+  
+  // Register Alice and Bob with the commit-chain. This is required to be done at least once per address in order to receive commit-chain transaction. 
+  // Note that the registration is done implicitly when sending your first transfer. 
+  await nocustManager.registerAddress(BOB_PUB)
+  await nocustManager.registerAddress(ALICE_PUB)
 
   // Send 0.00 fETH on the commit-chain to Alice  
   // In this example, we send 0 fETH, because Alice doesn't have any funds yet, and yes, we can send 0-value commit-chain transaction, haha
-  const txId = await lqdManager.postTransfer({
+  const txId = await nocustManager.sendTransaction({
       to: ALICE_PUB,
       // 0.00 fEther in Wei as BigNumber. 
       amount: (new BigNumber(0.00)).shiftedBy(-18),
@@ -172,22 +174,22 @@ sendToALice()
 To make transfers, you need to have NOCUST funds. NOCUST funds are simply funds deposited into the NOCUST smart-contract, which can be done through the client as follows.
 
 ```typescript
-const transactionHash : string = await lqdManager.deposit(
-  BOB_PUB,                             // Account from which to make a deposit (its private key needs to be in the Web3 instance)
+const transactionHash = await nocustManager.deposit(
+  BOB_PUB,                       // Account from which to make a deposit (its private key needs to be in the Web3 instance)
   web3.utils.toWei(0.5,'ether'), // Amount to deposit
   web3.utils.toWei(10,'gwei'),   // Gas price, 10 Gwei
   150000                         // Gas Limit
 );
 ```
 
-The function `deposit()` makes a contract call to the NOCUST smart contract with the specified amount. The commit-chain funds are available after `60` block confirmation. To check your NOCUST balance, you can call the `getOffChainBalance()` function. Note that `deposit()`and `getoffChainBalance()` take a parameter `tokenAddress` to similarly manipulate ERC-20 tokens.
+The function `deposit()` makes a contract call to the NOCUST smart contract with the specified amount. The commit-chain funds are available after `60` block confirmation. To check your NOCUST balance, you can call the `getNocustBalance()` function. Note that `deposit()`and `getNocustBalance()` take a parameter `tokenAddress` to similarly manipulate ERC-20 tokens.
 
 ```typescript
-const balance : BigNumber = await lqdManager.getOffChainBalance(bob);
-console.log("Bob's commit-chain balance is: ", balance.toString())
+const balance : BigNumber = await nocustManager.getNocustBalance(bob);
+console.log("Bob's commit-chain balance is: ", balance.toString(), " wei")
 ```
 
-⚠️ Don't forget to provide a [transfer allowance](https://medium.com/ethex-market/erc20-approve-allow-explained-88d6de921ce9) to the NOCUST contract for the ERC-20 you wish to use.
+⚠️ Don't forget to provide a [transfer allowance](https://medium.com/ethex-market/erc20-approve-allow-explained-88d6de921ce9) to the NOCUST contract for the ERC-20 you wish to use. You can also use the function `approveAndDeposit()` that will check for allowance and make an approve call prior to the deposit if necessary. 
 
 ### NOCUST Transfers \(🙋‍♂️ ➡️ 🙋‍♀️\)
 
@@ -202,7 +204,7 @@ If you want to trigger a special event upon an incoming transaction, you can def
 
 ```typescript
 const Web3 = require('web3') // Web3 1.0.0-beta.36 only for now
-const { LQDManager } = require('nocust-client')
+const { NocustManager } = require('nocust-client')
 
 // Setup web3 with Infura
 const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/'));
@@ -213,21 +215,20 @@ const ALICE_PUB = wallets[0].address
 const ALICE_PRIV = wallets[0].privateKey
 
 // Setup the LQDManager
-const lqdManager = new LQDManager({
+const nocustManager = new NocustManager({
   rpcApi: web3,
   hubApiUrl: 'https://rinkeby.liquidity.network/',
   contractAddress: '0x6B9f10931E88349A572F2f0883E49528902B4b5D',
 });
 
 const register = async () => {
-  // Register an address to be used with the LQD manager
-  const incomingTransferEventEmitter = await lqdManager.register(ALICE_PUB)
+  // First insure that the address is registered
+  await nocustManager.register(ALICE_PUB)
 
   // Trigger a log upon an incoming transfer
-  incomingTransferEventEmitter.on('IncomingTransfer',
-    (transfer: TransferDataInterface) => {
-      console.log(`Alice is receiving a transfer of  ${transfer.amount} wei from ${transfer.wallet.address}`),
-    });
+  nocustManager.subscribeToIncomingTransfer(
+    alice, 
+    (transfer) => console.log(`Alice is receiving a transfer of  ${transfer.amount} wei from ${transfer.wallet.address}`)
   )
 
   console.log("Alice is ready to receive transfers !")
@@ -240,28 +241,33 @@ register()
 NOCUST 🌊 support the transfer of ERC-20 tokens. The hub decides which tokens can be used on NOCUST. To see which tokens are currently supported by a NOCUST hub, call `getSupportedTokens()`:
 
 ```typescript
-const supportedTokenArray : string[] = await lqdManager.getSupportedTokens()
-const NocustContract : string = supportedTokenArray[0]
-const tokenXYZcontract : string = supportedTokenArray[1]
+const supportedTokenArray = await nocustManager.getSupportedTokens()
+
+// The first element in the array is for Ether token, its token address it set to the nocust smart-contract address.
+const NocustContract = supportedTokenArray[0].tokenAddress
+
+// Following elements are the tokens supported by the commit-chain 
+const tokenXYZcontract = supportedTokenArray[1].tokenAddress
+const tickerName = supportedTokenArray[1].shortName
 ```
 
-`supportedTokenArray` contains an array of ERC-20 smart-contract addresses. The address at index 0 is the address of the NOCUST smart-contract \(reflecting the fETH on the NOCUST commit-chain\).
+`supportedTokenArray` contains an array of objects containing the information about the ERC-20 tokens supported by the commit-chain. The element at index 0 is for Ether \(reflecting the fETH on the NOCUST commit-chain\).
 
-With the help of the `register()` function, we can tell the hub which tokens we want to use:
+With the help of the `registerAddress()` function, we can register the tokens we want to use:
 
 ```typescript
-await lqdManager.register(BOB_PUB, tokenXYZcontract)
+await registerAddress.register(ALICE_PUB, tokenXYZcontract)
 // Bob can receive fETH and the fToken at the address `tokenXYZcontract`
 ```
 
-The register function always registers fETH by default and registers the token\(s\) in the second parameter. Note, that the recipient also needs to `register()` the token. To make a fToken transfer, simply specify the address of the fToken in the `tokenAddress` field.
+Note, that the recipient needs to have register at least once in the past with the commit-chain for the specific token prior receiving any transaction. To make a fToken transfer, simply specify the address of the fToken in the `tokenAddress` field.
 
 ```typescript
-  const txId : number = await lqdManager.sendTransfer({
+  const txId = await registerAddress.sendTransaction({
       to: ALICE_PUB,
       amount: web3.utils.toWei(0.01,'ether'), // Amount
       from: BOB_PUB,
-      tokenAddress: tokenXYZ,
+      tokenAddress: tokenXYZcontract,
    });
 ```
 
@@ -272,13 +278,13 @@ A withdrawal allows the user to send NOCUST funds back to Ethereum \(also called
 The amount of NOCUST funds available for withdrawal may differ from the current NOCUST balance. Recently acquired NOCUST funds cannot be withdrawn instantly, and need between 36h and 72h \(one full round\) to be available. To check the current balance available for withdrawal call the function `getWithdrawalLimit()` :
 
 ```typescript
-const withdrawalLimit : BigNumber = lqdManager.getWithdrawalLimit(bob)
+const withdrawalLimit = nocustManager.getWithdrawalLimit(bob)
 ```
 
 To initiate a withdrawal, call `withdrawalRequest()` with an amount &lt;= `withdrawalLimit`:
 
 ```typescript
-const transactionHash : string = await lqdManager.withdrawalRequest(
+const transactionHash = await nocustManager.withdrawalRequest(
   BOB_PUB,                       // Account from which to make the withdrawal
   web3.utils.toWei(0.5,'ether'), // Amount to withdraw
   web3.utils.toWei(10,'gwei'),   // Gas price, 10 Gwei
@@ -289,7 +295,7 @@ const transactionHash : string = await lqdManager.withdrawalRequest(
 This makes a contract call to initiate a withdrawal. After 36h to 72h \(corresponding to one full NOCUST round\), the withdrawal needs to be confirmed. To query how much time is left before the withdrawal can be confirmed you can call `getBlocksToWithdrawalConfirmation()`:
 
 ```typescript
-const blocksToConfirmation : number = await lqdManager.getBlocksToWithdrawalConfirmation(BOB_PUB)
+const blocksToConfirmation = await nocustManager.getBlocksToWithdrawalConfirmation(BOB_PUB)
 ```
 
 `getBlocksToWithdrawalConfirmation()` returns the number of block confirmations required before to confirm a withdrawal. If the function returns `0`, the withdrawal is ready for confirmation. Note that the function will return `-1` if there is no withdrawal pending.
@@ -297,7 +303,7 @@ const blocksToConfirmation : number = await lqdManager.getBlocksToWithdrawalConf
 Finally, to confirm the withdrawal, you can call `withdrawalConfirmation()`:
 
 ```typescript
-const transactionHash : string = await lqdManager.withdrawalConfirmation(
+const transactionHash = await nocustManager.withdrawalConfirmation(
   BOB_PUB,                       // Account from which to make the withdrawal
   web3.utils.toWei(10,'gwei'),   // Gas price, 10 Gwei
   300000                         // Gas Limit
