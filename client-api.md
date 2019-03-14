@@ -364,11 +364,23 @@ Return an observable to notify of incoming transfers.
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `string` |  Address to watch for. |
-| callBack | `function` |
-| `Optional` tokenAddress | `any` |
+| callBack | `function` | Callback function that will be called on incoming transfers. The function provides the incoming transfer as argument. |
+| `Optional` tokenAddress | `any` | Targeted ERC-20 token. Use Ether if not specified. The string `'all'` can be used to be notified for all tokens available on the hub. |
 
 **Returns:** `function`
 Unsubscribe function
+
+**Example:**
+
+```
+const unsubscribe = nocustManager.subscribeToIncomingTransfer(
+		bob,
+		tx => console.log(`Incoming transaction from: ${tx.wallet.address} of: ${tx.amount.toString()} wei of token ${tx.wallet.token}.`), 
+		'all'
+	)
+// Unsubscribe when it is not needed anymore
+unsubscribe()
+```
 
 ___
 <a id="isaddressregistered"></a>
