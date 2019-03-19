@@ -2,18 +2,17 @@
 
 #### TLDR;
 
-Download [this HTML/JS zip file](http://liquidity.network/media/liquidity_browser_app.zip), extract, and launch index.html in your browser.
-It will automagically register two new wallets with a NOCUST hub, and make a transfer among them 😮.
+Download [this HTML/JS zip file](http://liquidity.network/media/liquidity_browser_app.zip), extract, and launch index.html in your browser. It will automagically register two new wallets with a NOCUST hub, and make a transfer among them 😮.
 
 ## Intro
 
 Liquidity Network's underlying technology are NOCUST commit-chains, a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet!
 
-A commit-chain is a *chain of commits* ⛓️, that means that NOCUST is committing regularly, every *round*, a commit of the commit-chain to the parent Ethereum chain. The commit-chain is run by a **non-custodial hub**, or operator, and clients communicate with the hub.
+A commit-chain is a _chain of commits_ ⛓️, that means that NOCUST is committing regularly, every _round_, a commit of the commit-chain to the parent Ethereum chain. The commit-chain is run by a **non-custodial hub**, or operator, and clients communicate with the hub.
 
-Contrary to side-chains, commit-chains don't need an additional consensus mechanism and rely on the security of the parent chain (here Ethereum). We refer the interested developer to a basic introduction of [basic introduction of NOCUST](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](./background.md), and for the formal geeks [we provide a paper](https://eprint.iacr.org/2018/642.pdf) 🤓 .
+Contrary to side-chains, commit-chains don't need an additional consensus mechanism and rely on the security of the parent chain \(here Ethereum\). We refer the interested developer to a basic introduction of [basic introduction of NOCUST](https://blog.liquidity.network/2018/11/21/nocust-101/), we provide extensive details in our [background section](background.md), and for the formal geeks [we provide a paper](https://eprint.iacr.org/2018/642.pdf) 🤓 .
 
-For developers, we start by describing the JavaScript client library for NOCUST 📱 (how to make transactions).
+For developers, we start by describing the JavaScript client library for NOCUST 📱 \(how to make transactions\).
 
 ## NOCUST JavaScript Client library 📱
 
@@ -37,7 +36,7 @@ The following figure illustrates the diffrent roles of each component in a NOCUS
 To install the NOCUST JavaScript API, simply run:
 
 ```text
-➜ npm install nocust-client	
+➜ npm install nocust-client
 ```
 
 The client requires Web3 \(version 1.0.0-beta.36 only for now\) to interact with the Ethereum Network. Additionally, as we are manipulating exclusively Ether amounts in Wei \(10^-18 Ether\), we use the `bignumber.js` library for Ether and token amounts \([to go beyond the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin)\).
@@ -87,7 +86,7 @@ The following table shows a list of the currently deployed NOCUST instances.
 
 | Rinkeby | Value |
 | :--- | :--- |
-| NOCUST smart-contract address \(`contractAddress`\) | 0x7e9c7846a22d4D6a8Fde0B586Ab1860B00316611 |
+| NOCUST smart-contract address \(`contractAddress`\) | 0xAC51255B0956a78BB25faE58BC28499dF0796668 |
 | Hub API URL \(`hubApiUrl`\) | [https://rinkeby.liquidity.network/](http://rinkeby.liquidity.network/) |
 | Test ERC-20 contract address | 0xA9F86DD014C001Acd72d5b25831f94FaCfb48717 |
 
@@ -117,14 +116,14 @@ The following JavaScript code sets up the client and transfers 0 fETH 🤪 from 
 To execute the example code below, follow those steps:
 
 ```text
-➜ npm install nocust-client	
+➜ npm install nocust-client    
 ➜ npm install web3@1.0.0-beta.36 bignumber.js
 ➜ # copy and paste the code above into `test.js`
 ➜ node test.js
 Transfer to Alice sent ! Transaction ID:  504
 ```
 
-We tested this example with `npm` version 5.7.1 and `node` version 8.5.0. 
+We tested this example with `npm` version 5.7.1 and `node` version 8.5.0.
 
 ```typescript
 const Web3 = require('web3') // Web3 1.0.0-beta.36 only for now
@@ -149,7 +148,7 @@ const nocustManager = new NocustManager({
   });
 
 const sendToALice = async () => {
-  
+
   // Register Alice and Bob with the commit-chain. This is required to be done at least once per address in order to receive commit-chain transaction. 
   // Note that the registration is done implicitly when sending your first transfer. 
   await nocustManager.registerAddress(BOB_PUB)
@@ -189,7 +188,7 @@ const balance : BigNumber = await nocustManager.getNocustBalance(bob);
 console.log("Bob's commit-chain balance is: ", balance.toString(), " wei")
 ```
 
-⚠️ Don't forget to provide a [transfer allowance](https://medium.com/ethex-market/erc20-approve-allow-explained-88d6de921ce9) to the NOCUST contract for the ERC-20 you wish to use. You can also use the function `approveAndDeposit()` that will check for allowance and make an approve call prior to the deposit if necessary. 
+⚠️ Don't forget to provide a [transfer allowance](https://medium.com/ethex-market/erc20-approve-allow-explained-88d6de921ce9) to the NOCUST contract for the ERC-20 you wish to use. You can also use the function `approveAndDeposit()` that will check for allowance and make an approve call prior to the deposit if necessary.
 
 ### NOCUST Transfers \(🙋‍♂️ ➡️ 🙋‍♀️\)
 
