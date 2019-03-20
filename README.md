@@ -1,9 +1,5 @@
 # Getting Started
 
-#### TLDR;
-
-Download [this HTML/JS zip file](http://liquidity.network/media/liquidity_browser_app.zip), extract, and launch index.html in your browser. It will automagically register two new wallets with a NOCUST hub, and make a transfer among them 😮.
-
 ## Intro
 
 Liquidity Network's underlying technology are NOCUST commit-chains, a layer 2 solution to scale blockchains such as Ethereum and it works today on the mainet!
