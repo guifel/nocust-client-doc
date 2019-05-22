@@ -1,6 +1,6 @@
 # Client API
 
-## NocustTransfer <a id="nocusttransfer"></a>
+## NOCUSTTransfer <a id="nocusttransfer"></a>
 
 Interface For the parameters object required to make nocust transfers.
 
@@ -24,12 +24,12 @@ Full transfer details including signatures and status.
 | amount | string | Transfer amount |
 | wallet | TransferWalletDataInterface | Sender details. |
 | recipient | TransferWalletDataInterface | Recipient details. |
-| round | number | NOCUST hub round of the transfer. |
+| eon\_number | number | NOCUST hub eon or round of the transfer. |
 | processed | boolean | If the payment hub processed the the transfer. The payment hub wait for the recipient confirmation before processing the transfer. |
 | completed | boolean | If the transfer is fully confirmed. |
 | canceled | boolean | If the transfer is canceled. |
 
-## NocustManager
+## NOCUSTManager
 
 ### approveAndDeposit <a id="approveanddeposit"></a>
 
@@ -135,9 +135,9 @@ Get the current Era or sub-block number. The number of block since the current E
 
 **Returns:** `Promise`&lt;`number`&gt; Era
 
-### getNocustBalance <a id="getnocustbalance"></a>
+### getNOCUSTBalance <a id="getnocustbalance"></a>
 
-▸ **getNocustBalance**\(address: `string`, tokenAddress?: `string`\): `Promise`&lt;`BigNumber`&gt;
+▸ **getNOCUSTBalance**\(address: `string`, tokenAddress?: `string`\): `Promise`&lt;`BigNumber`&gt;
 
 Fetch the current NOCUST balance.
 
@@ -296,12 +296,12 @@ Return an observable to notify of incoming transfers.
 | callBack | `function` | Callback function that will be called on incoming transfers. The function provides the incoming transfer as argument. |
 | `Optional` tokenAddress | `any` | Targeted ERC-20 token. Use Ether if not specified. The string `'all'` can be used to be notified for all tokens available on the hub. |
 
-**Returns:** `function` Unsubscribe function
+**Returns:**  `Promise`&lt; `unsubscribe () => Void>` A promise that resolves when the callback is registered. The promise resolves with the unsubscribe function of the callback.
 
 **Example:**
 
 ```text
-const unsubscribe = nocustManager.subscribeToIncomingTransfer(
+const unsubscribe = await nocustManager.subscribeToIncomingTransfer(
         bob,
         tx => console.log(`Incoming transaction from: ${tx.wallet.address} of: ${tx.amount.toString()} wei of token ${tx.wallet.token}.`), 
         'all'
@@ -325,9 +325,9 @@ Check if an address is registered with the nocust hub.
 
 **Returns:** `Promise`&lt;`boolean`&gt; Return `true` if the registration is successful
 
-### isAddressRegisteredWithHub <a id="isaddressregisteredwithhub"></a>
+### isAddressRegisteredWithOperator <a id="isaddressregisteredwithhub"></a>
 
-▸ **isAddressRegisteredWithHub**\(address: `string`, tokenAddress?: `string`\): `Promise`&lt;`boolean`&gt;
+▸ **isAddressRegisteredWithOperator**\(address: `string`, tokenAddress?: `string`\): `Promise`&lt;`boolean`&gt;
 
 Check whether an address is registered with the payment hub and can therefore receive payments.
 

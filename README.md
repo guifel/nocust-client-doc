@@ -35,12 +35,12 @@ To install the NOCUST JavaScript API, simply run:
 ➜ npm install nocust-client
 ```
 
-The client requires Web3 \(version 1.0.0-beta.36 only for now\) to interact with the Ethereum Network. Additionally, as we are manipulating exclusively Ether amounts in Wei \(10^-18 Ether\), we use the `bignumber.js` library for Ether and token amounts \([to go beyond the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin)\).
+The client requires Web3 \(version 1.0.0-beta.37 only for now\) to interact with the Ethereum Network. Additionally, as we are manipulating exclusively Ether amounts in Wei \(10^-18 Ether\), we use the `bignumber.js` library for Ether and token amounts \([to go beyond the Javascript safe limit](https://stackoverflow.com/questions/307179/what-is-javascripts-highest-integer-value-that-a-number-can-go-to-without-losin)\).
 
 Required dependencies to be installed:
 
 ```text
-➜ npm install web3@1.0.0-beta.36 bignumber.js
+➜ npm install web3@1.0.0-beta.37 bignumber.js
 ```
 
 For typescript users we recomment the following configuration in your `tsconfig.json` file.
@@ -72,21 +72,25 @@ For typescript users we recomment the following configuration in your `tsconfig.
 
 ## Currently Deployed NOCUST commit-chains
 
+### Public test network
+
 The following table shows a list of the currently deployed NOCUST instances.
 
 | Ethereum Mainnet |  |
 | :--- | :--- |
-| NOCUST smart-contract address \(`contractAddress`\) | To be deployed |
+| NOCUST smart-contract address \(`contractAddress`\) | 0x83aFD697144408C344ce2271Ce16F33A74b3d98b |
 | Hub API URL \(`hubApiUrl`\) | [https://public.liquidity.network/](https://public.liquidity.network/) |
 | LQD ERC-20 contract address | 0xD29F0b5b3F50b07Fe9a9511F7d86F4f4bAc3f8c4 |
 
-| Rinkeby | Value |
+| Rinkeby Testnet | Value |
 | :--- | :--- |
-| NOCUST smart-contract address \(`contractAddress`\) | 0xAC51255B0956a78BB25faE58BC28499dF0796668 |
+| NOCUST smart-contract address \(`contractAddress`\) | 0x66b26B6CeA8557D6d209B33A30D69C11B0993a3a |
 | Hub API URL \(`hubApiUrl`\) | [https://rinkeby.liquidity.network/](http://rinkeby.liquidity.network/) |
 | Test ERC-20 contract address | 0xA9F86DD014C001Acd72d5b25831f94FaCfb48717 |
 
-The following is a test NOCUST on a private blockchain with a shorter block interval \(6 seconds instead of 15 seconds\) and a shorter checekpoint round time \(6 minutes instead of 36 hours\). This allows developers to test features much faster than waiting for long round times 😁.
+### Private test network
+
+The following is a test NOCUST on a private blockchain with a shorter block interval \(6 seconds instead of 15 seconds\) and a shorter checkpoint round time \(6 minutes instead of 36 hours\). This allows developers to test features much faster than waiting for long round times 😁.
 
 Please do initiate Web3 with a HTTP provider given the RPC URL provided in the following table.
 
@@ -97,13 +101,23 @@ Please do initiate Web3 with a HTTP provider given the RPC URL provided in the f
 | Test ERC-20 contract address | 0xe982E462b094850F12AF94d21D470e21bE9D0E9C |
 | Ethereum node RPC URL | [https://limbo.liquidity.network/ethrpc](https://limbo.liquidity.network/ethrpc) |
 
+Note that the commit-chain and the Limbo blockchain are completely reset every 24H. To get some Ether on Limbo you can use the default Ganache accounts that owns Ether and test ERC-20: 
+
+| Owns | Public Key | Private Key \(!! Test purpose only !!\) |
+| :--- | :--- | :--- |
+| Ether & Test ERC20 | 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1 | 0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d |
+| Ether | 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 | 0x6cbed15c793ce57650b9877cf6fa156fbef513c4e6134f022a85b1ffdd59b2a1 |
+| Ether | 0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b | 0x6370fd033278c143179d81c5526140625662b8daa446c22ee2d73db3707e620c |
+| Ether | 0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d | 0x646f1ce2fdad0e6deeeb5c7e8e5543bdde65e86029e2fd9fc169899c440a7913 |
+| Ether | 0xd03ea8624C8C5987235048901fB614fDcA89b117 | 0xadd53f9a7e588d003326d1cbf9e4a43c061aadd9bc938c843a79e7b4fd2ad743 |
+
 ### NOCUST Transfer - Full Example
 
 We offer two out of the box examples 😍
 
 #### `Browser` Example
 
-Download [this HTML/JS zip file](http://liquidity.network/media/liquidity_browser_app.zip), extract, and launch index.html in your browser. It will automagically register two new wallets with the hub, and make a transfer among them.
+Try [here](https://owallet.liquidity.network) a very simple browser wallet. It will automagically register two new wallets with the hub, and make a transfer among them. See the source code on [GitHub](https://github.com/liquidity-network/liquidity-browser-app).
 
 #### `Node` Example
 
@@ -122,9 +136,9 @@ Transfer to Alice sent ! Transaction ID:  504
 We tested this example with `npm` version 5.7.1 and `node` version 8.5.0.
 
 ```typescript
-const Web3 = require('web3') // Web3 1.0.0-beta.36 only for now
+const Web3 = require('web3') // Web3 1.0.0-beta.37 only for now
 const BigNumber = require('bignumber.js')
-const { NocustManager } = require('nocust-client')
+const { NOCUSTManager } = require('nocust-client')
 
 // Setup web3 with Infura
 const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/'));
@@ -137,10 +151,10 @@ const ALICE_PUB = wallets[1].address
 const ALICE_PRIV = wallets[1].privateKey
 
 // Specify to which commit-chain we want to connect
-const nocustManager = new NocustManager({
+const nocustManager = new NOCUSTManager({
   rpcApi: web3,
-  hubApiUrl: 'https://rinkeby.liquidity.network/',
-  contractAddress: '0x7e9c7846a22d4D6a8Fde0B586Ab1860B00316611',
+  operatorApiUrl: 'https://rinkeby.liquidity.network/',
+  contractAddress: '0x66b26B6CeA8557D6d209B33A30D69C11B0993a3a',
   });
 
 const sendToALice = async () => {
@@ -180,7 +194,7 @@ const transactionHash = await nocustManager.deposit(
 The function `deposit()` makes a contract call to the NOCUST smart contract with the specified amount. The commit-chain funds are available after `60` block confirmation. To check your NOCUST balance, you can call the `getNocustBalance()` function. Note that `deposit()`and `getNocustBalance()` take a parameter `tokenAddress` to similarly manipulate ERC-20 tokens.
 
 ```typescript
-const balance : BigNumber = await nocustManager.getNocustBalance(bob);
+const balance : BigNumber = await nocustManager.getNOCUSTBalance(bob);
 console.log("Bob's commit-chain balance is: ", balance.toString(), " wei")
 ```
 
@@ -188,10 +202,7 @@ console.log("Bob's commit-chain balance is: ", balance.toString(), " wei")
 
 ### NOCUST Transfers \(🙋‍♂️ ➡️ 🙋‍♀️\)
 
-NOCUST transfers are free of gas and instant! There are two modes to send them.
-
-* **Active Delivery:** NOCUST currently requires the recipient of a transfer to be online \(to sign a message to receive a NOCUST transfer\). Once the library is setup and after calling the `register` function, transfers are automatically accepted.
-* **Passive Delivery \[soon\]:** We will soon be releasing an upgrade to NOCUST to allow a client to receive a transaction while **offline** 👻.
+NOCUST transfers are free of gas and instant! See[ the example above](./#nocust-transfer-full-example) to learn how to simply make an Ether transfer. 
 
 #### Listening for Incoming Transfers
 
@@ -210,10 +221,10 @@ const ALICE_PUB = wallets[0].address
 const ALICE_PRIV = wallets[0].privateKey
 
 // Setup the LQDManager
-const nocustManager = new NocustManager({
+const nocustManager = new NOCUSTManager({
   rpcApi: web3,
-  hubApiUrl: 'https://rinkeby.liquidity.network/',
-  contractAddress: '0x6B9f10931E88349A572F2f0883E49528902B4b5D',
+  operatorApiUrl: 'https://rinkeby.liquidity.network/',
+  contractAddress: '0x66b26B6CeA8557D6d209B33A30D69C11B0993a3a',
 });
 
 const register = async () => {
