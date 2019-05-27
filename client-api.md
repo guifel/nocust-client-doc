@@ -1,4 +1,10 @@
-# Client API
+---
+description: Documentation of the nocust-client JavaScript library
+---
+
+# JavaScript SDK
+
+NPM link: [https://www.npmjs.com/package/nocust-client](https://www.npmjs.com/package/nocust-client)
 
 ## NOCUSTTransfer <a id="nocusttransfer"></a>
 
@@ -494,4 +500,82 @@ Make an on-chain transaction to initiate a withdrawal to remove the funds from t
 | `Optional` tokenAddress | `string` | Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`&lt;`string`&gt; Hash of the on-chain transaction of the withdrawal request.
+
+## Errors handling
+
+The `NOCUSTManager` instance throws errors that can be catch and easily handled.
+
+```javascript
+  import { NOCUSTManager, NOCUSTError } from 'nocust-client'
+  
+  try {
+    balance = await nocustManager.getNOCUSTBalance(address)
+  } catch(err) {
+    if(err.code === NOCUSTError.UNREGISTERED_WITH_COMMIT_CHAIN) {
+      // Register...
+    } else {
+      console.error(err.message)
+    }
+  }
+```
+
+### Error codes
+
+The library supports the following error code that can be checked as in the example above. The error codes are available in the `NOCUSTError` enum. 
+
+#### UNKNOWN\_ERROR
+
+Unknown error.
+
+#### UNREGISTERED\_WITH\_COMMIT\_CHAIN
+
+Wallet not registered with the commit-chain ledger. The address was not register with the commit-chain, the `registerAddress` function need to be called for the specific address and token. 
+
+#### PREPARE\_TRANSFER\_FAILURE
+
+Could not prepare transfer/swap hashes. 
+
+#### SINGING\_FAILURE
+
+Was not able to produce a signature. The function called require to sign a message with the corresponding private key. Ensure that the private key was added to the web3 object passed to the `NOCUSTManager` instance. To add a private key to a web3 instance do: `web3.eth.accounts.wallet.add(privateKey)`
+
+#### POST\_FAILURE
+
+Post request to operator server failed. The server most likely replied with a more specific error.
+
+#### REGISTRATION\_THROTTLING
+
+This means that the DoS protection of the server was triggered. Human verification is required. The complete the human verification the user is required to solve a captcha. The captcha page is available at `<server URL>/whitelist/`
+
+#### FETCH\_OPERATOR\_DATA\_ERROR
+
+Error when fetching data from the operator HTTP or Websocket API. Please ensure that the `operatorUrl` parameter passed to the `NOCUSTManager` instance is correct and that the URL is reachable.
+
+#### FETCH\_PARENT\_CHAIN\_DATA\_ERROR
+
+Error when fetching data from contract/blockchain. Ensure that your RPC endpoint \(infura ?\) is working correctly. The RPC endpoint URL is passe to the `NOCUSTManager` instance by the parameter `rpcApi`.
+
+#### CONFIRMATION\_TIMEOUT
+
+Confirmation timeout of transfer/registration/swap. The server could not process the action.
+
+#### NON\_UNIQUE\_TRANSFER
+
+The exact same transfer/swap/registration was already posted. To solve this issue adjust `nonce` in the transfer `NOCUSTTransfer` object. The `nonce` can also be set it to undefined to automatically assign a random nonce.
+
+#### PARENT\_CHAIN\_TRANSACTION\_FAILURE
+
+Could not execute a blockchain transaction.  Please verify that the gas limit is sufficiently high. Verify contract address and gas price. Ensure that you have enough Ether to pay for gas fees and amount,
+
+####  INSUFFICIENT\_WITHDRAWAL\_LIMIT
+
+You do not have enough withdrawal allowances \(Yet\). It is required to wait one full Eon \(round\) to pass for freshly received or deposited funds to be withdrawable. Use the `getWithdrawalLimit` function to get your current withdrawal limit.
+
+#### NO\_ETHER\_TO\_PAY\_FOR\_GAS
+
+Some Ether are needed to pay for gas fees. Send a small amount of Ether to the address trying to execute the operation.
+
+#### WALLET\_STATE\_ERROR
+
+Wallet state service failed, meaning that there is some inconsistent data from the operator API. The error message will likely give you more information. Note this can mean that the account is potentially unsafe/out of service and you might need to initiate a challenge/recover. 
 
