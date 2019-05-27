@@ -24,8 +24,8 @@ Full transfer details including signatures and status.
 | amount | string | Transfer amount |
 | wallet | TransferWalletDataInterface | Sender details. |
 | recipient | TransferWalletDataInterface | Recipient details. |
-| eon\_number | number | NOCUST hub eon or round of the transfer. |
-| processed | boolean | If the payment hub processed the the transfer. The payment hub wait for the recipient confirmation before processing the transfer. |
+| eon\_number | number | NOCUST operator eon or round of the transfer. |
+| processed | boolean | If the payment operator processed the the transfer. The operator wait for the recipient confirmation before processing the transfer. |
 | completed | boolean | If the transfer is fully confirmed. |
 | canceled | boolean | If the transfer is canceled. |
 
@@ -67,7 +67,7 @@ Buys a SLA. The address needs to have the token amount available as a nocust bal
 
 ▸ **deposit**\(address: `string`, amount: `BigNumber` _\|_ `BN` _\|_ `string`, gasPrice: `BigNumber` _\|_ `BN` _\|_ `string`, gas: `number`, tokenAddress?: `string`\): `Promise`&lt;`string`&gt;
 
-Make an on-chain transaction to deposit funds into the NOCUST hub. This funds can be later used for making off-chain NOCUST transfers.
+Make an on-chain transaction to deposit funds into the NOCUST commit-chain. This funds can be later used for making off-chain NOCUST transfers.
 
 **Parameters:**
 
@@ -80,20 +80,6 @@ Make an on-chain transaction to deposit funds into the NOCUST hub. This funds ca
 | `Optional` tokenAddress | `string` | Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`&lt;`string`&gt; Hash of the on-chain transaction of the deposit.
-
-### finalizeSwap <a id="finalizeswap"></a>
-
-▸ **finalizeSwap**\(address: `string`, sellTokenAddress: `string`, txId: `number`\): `Promise`&lt;`void`&gt;
-
-**Parameters:**
-
-| Name | Type | Description |
-| :--- | :--- | :--- |
-| address | `string` | - |
-| sellTokenAddress | `string` | - |
-| txId | `number` | - |
-
-**Returns:** `Promise`&lt;`void`&gt;
 
 ### getBlockPerEon <a id="getblockpereon"></a>
 
@@ -198,15 +184,15 @@ Get the SLA status for a given address.
 | :--- | :--- | :--- |
 | address | `string` | Targeted Ethereum address. |
 
-**Returns:** `Promise`&lt;`number`&gt; 0 if not under SLA, expiry time if currently enroll with a SLA.
+**Returns:** `Promise`&lt;`number`&gt; 0 if not under SLA, expiry date unix timestamp in millisecond if currently enroll with a SLA.
 
 ### getSupportedTokens <a id="getsupportedtokens"></a>
 
 ▸ **getSupportedTokens**\(\): `Promise`&lt;`object`\[\]&gt;
 
-Fetch the smart contract addresses of the supported token by the hub.
+Fetch the smart contract addresses of the supported token by the commit-chain.
 
-**Returns:** `Promise`&lt;`object`\[\]&gt; Promise that resolves with an array of objects `{ tokenAddress: string, name: string, shortName: string }` for each token supported by the hub. Address is the address of the ERC-20 contract of the token.
+**Returns:** `Promise`&lt;`object`\[\]&gt; Promise that resolves with an array of objects `{ tokenAddress: string, name: string, shortName: string }` for each token supported by the commit-chain. Address is the address of the ERC-20 contract of the token.
 
 ### getTransaction <a id="gettransaction"></a>
 
@@ -294,7 +280,7 @@ Return an observable to notify of incoming transfers.
 | :--- | :--- | :--- |
 | address | `string` | Address to watch for. |
 | callBack | `function` | Callback function that will be called on incoming transfers. The function provides the incoming transfer as argument. |
-| `Optional` tokenAddress | `any` | Targeted ERC-20 token. Use Ether if not specified. The string `'all'` can be used to be notified for all tokens available on the hub. |
+| `Optional` tokenAddress | `any` | Targeted ERC-20 token. Use Ether if not specified. The string `'all'` can be used to be notified for all tokens available on the commit-chain. |
 
 **Returns:**  `Promise`&lt; `unsubscribe () => Void>` A promise that resolves when the callback is registered. The promise resolves with the unsubscribe function of the callback.
 
@@ -314,7 +300,7 @@ unsubscribe()
 
 ▸ **isAddressRegistered**\(address: `string`, tokenAddress?: `string`\): `Promise`&lt;`boolean`&gt;
 
-Check if an address is registered with the nocust hub.
+Check if an address is registered with the nocust commit-chain.
 
 **Parameters:**
 
@@ -329,7 +315,7 @@ Check if an address is registered with the nocust hub.
 
 ▸ **isAddressRegisteredWithOperator**\(address: `string`, tokenAddress?: `string`\): `Promise`&lt;`boolean`&gt;
 
-Check whether an address is registered with the payment hub and can therefore receive payments.
+Check whether an address is registered with the commit-chain and can therefore receive payments.
 
 **Parameters:**
 
@@ -344,7 +330,7 @@ Check whether an address is registered with the payment hub and can therefore re
 
 ▸ **isRecovery**\(\): `Promise`&lt;`boolean`&gt;
 
-Check whether the the hub is in recovery mode and therfore cna't be used anymore.
+Check whether the commit-chain is in recovery mode. If it is the case, the commit-chain can't be used anymore and funds need to be recovered. 
 
 **Returns:** `Promise`&lt;`boolean`&gt; Recovery status.
 
@@ -387,7 +373,7 @@ Make an on-chain transaction to initiate a state update challenge.
 
 ▸ **recoverFunds**\(address: `string`, gasPrice: `any`, gas: `any`, tokenAddress?: `string`\): `Promise`&lt;`string`&gt;
 
-Make an on-chain transaction to recover funds whenever the hub falls into recovery mode.
+Make an on-chain transaction to recover funds whenever the commit-chain falls into recovery mode.
 
 **Parameters:**
 
@@ -404,13 +390,13 @@ Make an on-chain transaction to recover funds whenever the hub falls into recove
 
 ▸ **registerAddress**\(address: `string`, tokenAddress?: `string`\): `Promise`&lt;`void`&gt;
 
-Register an address for a given token with the payment hub. An address needs to be registered with the payment hub for each token separately in order to send or receive transfers. This operation is done implicitly when sending a transfer if the address is not yet registered. Note that for a transfer to succeed the recipient need to have registered.
+Register an address for a given token with the commit-chain. An address needs to be registered with the commit-chain for each token separately in order to send or receive transfers. This operation is done implicitly when sending a transfer if the address is not yet registered. Note that for a transfer to succeed the recipient need to have registered.
 
 **Parameters:**
 
 | Name | Type | Description |
 | :--- | :--- | :--- |
-| address | `string` | Address to register with the payment hub . |
+| address | `string` | Address to register with the commit-chain. |
 | `Optional` tokenAddress | `string` | Targeted ERC-20 token. Use Ether if not specified. |
 
 **Returns:** `Promise`&lt;`void`&gt;
@@ -423,11 +409,12 @@ Register an address for a given token with the payment hub. An address needs to 
 
 | Name | Type | Description |
 | :--- | :--- | :--- |
-| address | `string` | - |
-| buyTokenAddress | `string` | - |
-| sellTokenAddress | `string` | - |
-| buyAmount | `BigNumber` \| `BN` \| `string` | - |
-| sellAmount | `BigNumber` \| `BN` \| `string` | - |
+| address | `string` | Main wallet address. |
+| buyTokenAddress | `string` | Token address to buy. |
+| sellTokenAddress | `string` | Token address to sell. |
+| buyAmount | `BigNumber` \| `BN` \| `string` | Amount of buy token to buy. |
+| sellAmount | `BigNumber` \| `BN` \| `string` | Amount of sell token to swap for buying amount. |
+| `Optional` subWalletSeedPhrase | `string` | \(optional\) A string signed by wallet's private key to generate a seed used to create auxilary swap accounts. Default value is "I want to use Liquidity Network Swaps" |
 
 **Returns:** `Promise`&lt;`number`&gt;
 
@@ -444,6 +431,19 @@ Send a NOCUST transfer.
 | transfer | NocustTransfer | Parameter object of an off-chain transfer. |
 
 **Returns:** `Promise`&lt;`number`&gt; Transaction Id of the NOCUST transfer
+
+### synchronizeSwapOrders
+
+▸ **synchronizeSwapOrders**\(address: `string`, subWalletSeedPhrase?: `string`\): `Promise`&lt;`TransferDataInterface[]`&gt;
+
+Claims all auxilary wallet's fulfilled swap orders and returns a list of unfulfilled swaps.
+
+**Parameters:**
+
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| address | `string` | Main wallet address. |
+| `Optional` subWalletSeedPhrase | `string` | \(optional\) A string signed by wallet's private key to generate a seed used to create auxiliary swap accounts. Default value is "I want to use Liquidity Network Swaps" |
 
 ### syncWallet <a id="syncwallet"></a>
 
@@ -481,7 +481,7 @@ Make an on-chain transaction to confirm a withdrawal previously initialized and 
 
 ▸ **withdrawalRequest**\(address: `string`, amount: `BigNumber` _\|_ `BN` _\|_ `string`, gasPrice: `BigNumber` _\|_ `BN` _\|_ `string`, gas: `number`, tokenAddress?: `string`\): `Promise`&lt;`string`&gt;
 
-Make an on-chain transaction to initiate a withdrawal to remove the funds from the NOCUST smart contract and to get them at the specified address. The amount specified needs to be available for withdrawal . The withdrawal will have to be confirmed after a certain period of time \(Currently between 36 and 72h\). On the top the gas fee, this function will take an Ether fee from the on-chain balance for the hub operator.
+Make an on-chain transaction to initiate a withdrawal to remove the funds from the NOCUST smart contract and to get them at the specified address. The amount specified needs to be available for withdrawal . The withdrawal will have to be confirmed after a certain period of time \(Currently between 36 and 72h\). On the top the gas fee, this function will take an Ether fee from the on-chain balance for the commit-chain operator.
 
 **Parameters:**
 
