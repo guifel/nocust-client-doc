@@ -191,7 +191,7 @@ const transactionHash = await nocustManager.deposit(
 );
 ```
 
-The function `deposit()` makes a contract call to the NOCUST smart contract with the specified amount. The commit-chain funds are available after `60` block confirmation. To check your NOCUST balance, you can call the `getNocustBalance()` function. Note that `deposit()`and `getNocustBalance()` take a parameter `tokenAddress` to similarly manipulate ERC-20 tokens.
+The function `deposit()` makes a contract call to the NOCUST smart contract with the specified amount. The commit-chain funds are available after `20` block confirmation. To check your NOCUST balance, you can call the `getNocustBalance()` function. Note that `deposit()`and `getNocustBalance()` take a parameter `tokenAddress` to similarly manipulate ERC-20 tokens.
 
 ```typescript
 const balance : BigNumber = await nocustManager.getNOCUSTBalance(bob);

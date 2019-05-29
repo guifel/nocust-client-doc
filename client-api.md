@@ -73,7 +73,7 @@ Buys a SLA. The address needs to have the token amount available as a nocust bal
 
 ▸ **deposit**\(address: `string`, amount: `BigNumber` _\|_ `BN` _\|_ `string`, gasPrice: `BigNumber` _\|_ `BN` _\|_ `string`, gas: `number`, tokenAddress?: `string`\): `Promise`&lt;`string`&gt;
 
-Make an on-chain transaction to deposit funds into the NOCUST commit-chain. This funds can be later used for making off-chain NOCUST transfers.
+Make an on-chain transaction to deposit funds into the NOCUST commit-chain. This funds can be later used for making off-chain NOCUST transfers. The operator will credit the deposit after 20 blocks of confirmation.
 
 **Parameters:**
 
