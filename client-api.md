@@ -579,3 +579,19 @@ Some Ether are needed to pay for gas fees. Send a small amount of Ether to the a
 
 Wallet state service failed, meaning that there is some inconsistent data from the operator API. The error message will likely give you more information. Note this can mean that the account is potentially unsafe/out of service and you might need to initiate a challenge/recover. 
 
+**INSUFFICIENT\_COMMIT\_CHAIN\_BALANCE**
+
+Not enough commit-chain/off-chain funds 
+
+
+
+**SWAP\_PENDING**
+
+A swap is pending so the account can't be use until the swap is finalized, canceled or the eon ends.
+
+
+
+\*\*\*\*
+
+
+
