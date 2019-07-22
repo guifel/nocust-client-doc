@@ -5,4 +5,5 @@
 * [JavaScript SDK](client-api.md)
 * [Operator API](operator-api.md)
 * [Scalability Costs](costs.md)
+* [Invoicing](invoicing.md)
 
