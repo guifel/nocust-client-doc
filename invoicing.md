@@ -57,7 +57,7 @@ The typical merchant needs to track the completion of payments by its customers.
 2. Encode the invoice with the `encodeInvoice` function and send it to the client front-end to display the QR code that will have to be scanned by the developer's mobile wallet. 
 3. Wait for an incoming payment with the nocust-manager that has the correct nonce value AND amount.
 
-#### Liqduitiy wallet deeplink invoice
+#### Liquidity wallet deeplink invoice
 
 It is possible to create a deeplinks invoices that will automatically open and fill the invoice details on the Liquidity Mobile Wallet on [Android](https://play.google.com/store/apps/details?id=com.liquiditynetwork.wallet) and [iOS](https://itunes.apple.com/ch/app/liquidity-network-wallet/id1395924630). Use the URL `lqdnet://send` and set the query parameters identical to the fields outputted by `createInvoice`
 
