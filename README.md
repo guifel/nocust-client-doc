@@ -74,15 +74,21 @@ For typescript users we recomment the following configuration in your `tsconfig.
 
 ### Public test network
 
-The following table shows a list of the currently deployed NOCUST instances.
+The following tables show the currently deployed NOCUST instances available for use.
 
-| Ethereum Mainnet |  |
+| Ethereum Mainnet Hub |  |
 | :--- | :--- |
 | NOCUST smart-contract address \(`contractAddress`\) | 0x83aFD697144408C344ce2271Ce16F33A74b3d98b |
 | Hub API URL \(`hubApiUrl`\) | [https://public.liquidity.network/](https://public.liquidity.network/) |
 | LQD ERC-20 contract address | 0xD29F0b5b3F50b07Fe9a9511F7d86F4f4bAc3f8c4 |
 
-| Rinkeby Testnet | Value |
+| Ethereum Mainnet XCHF only Hub |  |
+| :--- | :--- |
+| NOCUST smart-contract address \(`contractAddress`\) | 0x13490D2143Dd9f2Bb30925710cEBd6CA44a594cB |
+| Hub API URL \(`hubApiUrl`\) | [hrrps://xchf.liquidity.network/](%20hrrps://xchf.liquidity.network/) |
+| XCHF ERC-20 contract address | 0xB4272071eCAdd69d933AdcD19cA99fe80664fc08 |
+
+| Rinkeby Testnet Hub | Value |
 | :--- | :--- |
 | NOCUST smart-contract address \(`contractAddress`\) | 0x66b26B6CeA8557D6d209B33A30D69C11B0993a3a |
 | Hub API URL \(`hubApiUrl`\) | [https://rinkeby.liquidity.network/](http://rinkeby.liquidity.network/) |

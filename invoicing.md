@@ -59,7 +59,7 @@ The typical merchant needs to track the completion of payments by its customers.
 
 #### Liquidity wallet deeplink invoice
 
-It is possible to create a deeplinks invoices that will automatically open and fill the invoice details on the Liquidity Mobile Wallet on [Android](https://play.google.com/store/apps/details?id=com.liquiditynetwork.wallet) and [iOS](https://itunes.apple.com/ch/app/liquidity-network-wallet/id1395924630). Use the URL `lqdnet://send` and set the query parameters identical to the fields outputted by `createInvoice`
+It is possible to create deeplink invoices that will automatically open and fill the invoice details on the Liquidity Mobile Wallet on [Android](https://play.google.com/store/apps/details?id=com.liquiditynetwork.wallet) and [iOS](https://itunes.apple.com/ch/app/liquidity-network-wallet/id1395924630). Use the URL `lqdnet://send` and set the query parameters identical to the fields outputted by `createInvoice`
 
 Example:
 
