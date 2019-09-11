@@ -85,7 +85,7 @@ The following tables show the currently deployed NOCUST instances available for 
 | Ethereum Mainnet XCHF only Hub |  |
 | :--- | :--- |
 | NOCUST smart-contract address \(`contractAddress`\) | 0x13490D2143Dd9f2Bb30925710cEBd6CA44a594cB |
-| Hub API URL \(`hubApiUrl`\) | [hrrps://xchf.liquidity.network/](%20hrrps://xchf.liquidity.network/) |
+| Hub API URL \(`hubApiUrl`\) | https://xchf.liquidity.network/ |
 | XCHF ERC-20 contract address | 0xB4272071eCAdd69d933AdcD19cA99fe80664fc08 |
 
 | Rinkeby Testnet Hub | Value |
