@@ -72,8 +72,6 @@ For typescript users we recomment the following configuration in your `tsconfig.
 
 ## Currently Deployed NOCUST commit-chains
 
-### Public test network
-
 The following tables show the currently deployed NOCUST instances available for use.
 
 | Ethereum Mainnet Hub |  |
@@ -82,11 +80,17 @@ The following tables show the currently deployed NOCUST instances available for 
 | Hub API URL \(`hubApiUrl`\) | [https://public.liquidity.network/](https://public.liquidity.network/) |
 | LQD ERC-20 contract address | 0xD29F0b5b3F50b07Fe9a9511F7d86F4f4bAc3f8c4 |
 
+**Important:**  By using the Liquidity Network Mainnet hub you accept our [Terms Of Service](https://liquidity-network.github.io/terms/tos).
+
 | Ethereum Mainnet XCHF only Hub |  |
 | :--- | :--- |
 | NOCUST smart-contract address \(`contractAddress`\) | 0x13490D2143Dd9f2Bb30925710cEBd6CA44a594cB |
 | Hub API URL \(`hubApiUrl`\) | https://xchf.liquidity.network/ |
 | XCHF ERC-20 contract address | 0xB4272071eCAdd69d933AdcD19cA99fe80664fc08 |
+
+
+
+**Important:**  By using the Liquidity Network Mainnet XCHF hub you accept our [Terms Of Service](https://liquidity-network.github.io/terms/tos).
 
 | Rinkeby Testnet Hub | Value |
 | :--- | :--- |
