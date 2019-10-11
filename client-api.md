@@ -535,7 +535,7 @@ Wallet not registered with the commit-chain ledger. The address was not register
 
 Could not prepare transfer/swap hashes. 
 
-#### SINGING\_FAILURE
+#### SIGNING\_FAILURE
 
 Was not able to produce a signature. The function called require to sign a message with the corresponding private key. Ensure that the private key was added to the web3 object passed to the `NOCUSTManager` instance. To add a private key to a web3 instance do: `web3.eth.accounts.wallet.add(privateKey)`
 
